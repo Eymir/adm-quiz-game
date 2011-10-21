@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:background="@drawable/splashscreen">
+    <ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView1" android:layout_alignParentLeft="true" android:layout_marginLeft="20dip" android:layout_marginTop="20dip"></ImageView>
+    <ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView2" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" android:layout_marginBottom="20dip" android:layout_marginRight="20dip"></ImageView>
+    <TextView android:textColor="@android:color/darker_gray" android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_centerInParent="true" android:text="@string/splash_name" android:textSize="30dip" android:textStyle="bold"></TextView>
+</RelativeLayout>
