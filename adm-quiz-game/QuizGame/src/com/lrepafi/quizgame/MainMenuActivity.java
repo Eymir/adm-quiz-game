@@ -1,6 +1,7 @@
 package com.lrepafi.quizgame;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,14 +51,23 @@ public class MainMenuActivity extends Activity {
 	   }
 	   
 	   private void showPlay() {
-		   //TODO
+
+		   Intent i = new Intent(this, QuestionActivity.class);
+		   startActivity(i);
+		   
 	   }
 	   
 	   private void showScores() {
-		 //TODO
+
+		   Intent i = new Intent(this, ScoresActivity.class);
+		   startActivity(i);
+		   
 	   }
 	   
 	   private void showCredits() {
-		 //TODO
+
+		   Intent i = new Intent(this, CreditsActivity.class);
+		   startActivity(i);
+		   
 	   }
 }
