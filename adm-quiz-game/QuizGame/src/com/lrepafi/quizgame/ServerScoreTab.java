@@ -1,5 +1,8 @@
 package com.lrepafi.quizgame;
 
+import com.lrepafi.quizgame.controllers.ScoreController;
+import com.lrepafi.quizgame.entities.Score;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.*;
@@ -39,27 +42,24 @@ public class ServerScoreTab extends Activity {
 	tv.setTextColor(Color.RED);
 	row.addView(tv);
 	table.addView(row);
-
-	try {
-	addScore(table, "netlopa", 51000, 1);
-	addScore(table, "razz", 49400, 2);
-	addScore(table, "billy", 44200, 3);
+	
+	ScoreController sCtrl = new ScoreController(true);
+	
+	for (int i=0;i<sCtrl.getScores().size();i++) {
+		addScore(table, sCtrl.getScores().get(i), i+1);
 	}
-	catch (Exception e) {
-		Log.d("TRIVIAL", e.getMessage());
-	}
-
+	
 	}
 
-	private void addScore(TableLayout table, String u, int score, int ranking) {
+	private void addScore(TableLayout table, Score s, int ranking) {
 
 		TableRow row = new TableRow(ServerScoreTab.this);
 		TextView tv = new TextView(ServerScoreTab.this);
-		tv.setText(u);
+		tv.setText(s.getUsername());
 		tv.setTextSize(20);
 		row.addView(tv);
 		tv = new TextView(ServerScoreTab.this);
-		tv.setText(String.valueOf(score));
+		tv.setText(String.valueOf(s.getScore()));
 		tv.setTextSize(20);
 		row.addView(tv);
 		tv = new TextView(ServerScoreTab.this);

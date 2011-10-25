@@ -13,16 +13,12 @@ import android.util.Log;
 import android.graphics.Color;
 import android.content.Context;
 
-public class LocalScoreTab extends Activity {
+public class ScoreTab extends Activity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		/* Second Tab Content */
-		/*TextView textView = new TextView(this);
-textView.setText("Local tab");
-setContentView(textView);*/
 		setContentView(R.layout.tabletest);
 
 		TableLayout table = (TableLayout) findViewById(R.id.tableLayoutScores);
@@ -49,27 +45,19 @@ setContentView(textView);*/
 		row.addView(tv);
 		table.addView(row);
 
-		/*row = new TableRow(this);
-tv = new TextView(this);
-tv.setText("Test info 1b");
-row.addView(tv);
-tv = new TextView(this);
-tv.setText("Test info 2b");
-row.addView(tv);
-tv = new TextView(this);
-tv.setText("Test info 3b");
-row.addView(tv);
-table.addView(row);*/
-
-		ScoreController sCtrl = new ScoreController(false);
+		ScoreController sCtrl = getScoreController();
 		
 		for (int i=0;i<sCtrl.getScores().size();i++) {
-			addScore(LocalScoreTab.this, table, sCtrl.getScores().get(i), i+1);
+			addScore(ScoreTab.this, table, sCtrl.getScores().get(i), i+1);
 		}
 
 	}
 	
-	private void addScore(Context c, TableLayout table, Score s, int ranking) {
+	protected ScoreController getScoreController() {
+		return new ScoreController(false);
+	}
+	
+	protected void addScore(Context c, TableLayout table, Score s, int ranking) {
 
 		TableRow row = new TableRow(c);
 		TextView tv = new TextView(c);
@@ -87,5 +75,4 @@ table.addView(row);*/
 		table.addView(row);
 
 	}
-
 }
