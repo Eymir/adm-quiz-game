@@ -14,11 +14,20 @@ public class ScoreController {
 			scores.add(new Score("netlopa",51000));
 			scores.add(new Score("marcinho",43100));
 			scores.add(new Score("goez",33500));
+			for (int i=0, cscore=33000;i<=20;i++) {
+				scores.add(new Score("local"+i,cscore));
+				cscore-=1000;
+			}
+			
 		}
 		else {
 			scores.add(new Score("netlopa",61000));
 			scores.add(new Score("razz",49400));
 			scores.add(new Score("billy",44200));
+			for (int i=0, cscore=44000;i<=20;i++) {
+				scores.add(new Score("remote"+i,cscore));
+				cscore-=1000;				
+			}
 		}
 		
 	}
@@ -45,6 +54,11 @@ public class ScoreController {
 		
 	public void addScore(String username, int score) {
 		//TODO
+	}
+	
+	public void deleteAll() {
+		scores = new ArrayList<Score>();
+		persist();
 	}
 
 	

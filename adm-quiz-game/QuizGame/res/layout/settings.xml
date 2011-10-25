@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" android:background="@drawable/almost_transparent">
+    <RelativeLayout android:layout_width="match_parent" android:id="@+id/relativeLayout1" android:layout_height="wrap_content" android:layout_marginTop="10dip">
+       <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textViewSettings" android:layout_centerHorizontal="true" android:text="@string/settings" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold"></TextView>
+		<ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView1" android:layout_toLeftOf="@id/textViewSettings" android:layout_marginRight="10dip"></ImageView>
+        <ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView2" android:layout_toRightOf="@id/textViewSettings" android:layout_marginLeft="10dip"></ImageView>
+     </RelativeLayout>
+          
+     <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textView1" android:layout_centerHorizontal="true" android:text="Username" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold" android:gravity="center" android:layout_marginTop="10dip"></TextView>
+     <EditText android:layout_height="wrap_content" android:id="@+id/editTextUsername" android:layout_width="match_parent">
+         <requestFocus></requestFocus>
+     </EditText>
+     
+     <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textView2" android:layout_centerHorizontal="true" android:text="Email" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold" android:gravity="center" android:layout_marginTop="10dip"></TextView>
+     
+     <EditText android:layout_height="wrap_content" android:id="@+id/editTextEmail" android:layout_width="match_parent" android:inputType="textEmailAddress"></EditText>
+     
+     <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textView3" android:layout_centerHorizontal="true" android:text="Question preferences" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold" android:gravity="center" android:layout_marginTop="10dip"></TextView>
+     
+     <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/linearLayoutPrefs">
+     <Button android:text="Select preferencies" android:id="@+id/buttonSelectPreferences" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+     <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:id="@+id/textViewPreferences" android:layout_centerHorizontal="true" android:text="Question preferences are not set" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold" android:gravity="center"></TextView>
+     </LinearLayout>
+     
+     <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textView4" android:layout_centerHorizontal="true" android:text="Question server" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold" android:gravity="center" android:layout_marginTop="10dip"></TextView>
+     
+     <Spinner android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/spinnerServer" android:prompt="@string/server_prompt"></Spinner>
+     
+     <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textView5" android:layout_centerHorizontal="true" android:text="Invite friends by email" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold" android:gravity="center" android:layout_marginTop="10dip"></TextView>
+     
+     <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/linearLayoutInvite">
+     <Button android:text="Invite" android:id="@+id/buttonAddFriend" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+     <EditText android:layout_height="wrap_content" android:id="@+id/editTextFriendEmail" android:layout_width="match_parent" android:inputType="textEmailAddress"></EditText>
+	 </LinearLayout>
+
+	
+</LinearLayout>

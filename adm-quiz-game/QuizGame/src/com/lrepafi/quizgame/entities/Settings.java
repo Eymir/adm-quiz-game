@@ -71,12 +71,4 @@ public class Settings {
 		
 	}
 	
-	public void persist() {
-		//TODO
-	}
-	
-	public void load() {
-		//TODO
-	}
-
 }

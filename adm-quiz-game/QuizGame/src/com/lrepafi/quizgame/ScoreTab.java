@@ -8,6 +8,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.*;
 import android.graphics.Typeface;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import 	android.view.ViewGroup.LayoutParams;
 import android.util.Log;
 import android.graphics.Color;
@@ -15,13 +18,22 @@ import android.content.Context;
 
 public class ScoreTab extends Activity {
 	/** Called when the activity is first created. */
+	ScoreController sCtrl;
+	TableLayout table;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.tabletest);
+		
+		sCtrl = getScoreController();
+		drawTable();
 
-		TableLayout table = (TableLayout) findViewById(R.id.tableLayoutScores);
+	}
+	
+	protected void drawTable() {
+		
+		table = (TableLayout) findViewById(R.id.tableLayoutScores);
 		TableRow row = new TableRow(this);
 		TextView tv = new TextView(this);
 
@@ -44,13 +56,12 @@ public class ScoreTab extends Activity {
 		tv.setTextColor(Color.RED);
 		row.addView(tv);
 		table.addView(row);
-
-		ScoreController sCtrl = getScoreController();
 		
 		for (int i=0;i<sCtrl.getScores().size();i++) {
 			addScore(ScoreTab.this, table, sCtrl.getScores().get(i), i+1);
 		}
 
+		
 	}
 	
 	protected ScoreController getScoreController() {
@@ -75,4 +86,5 @@ public class ScoreTab extends Activity {
 		table.addView(row);
 
 	}
+	
 }
