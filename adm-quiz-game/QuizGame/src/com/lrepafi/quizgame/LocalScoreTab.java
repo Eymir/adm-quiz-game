@@ -8,21 +8,28 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.*;
 import android.graphics.Typeface;
-import 	android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.LayoutParams;
 import android.util.Log;
 import android.graphics.Color;
 import android.content.Context;
 
-public class LocalScoreTab extends Activity {
+public class LocalScoreTab extends ScoreTab {
 	/** Called when the activity is first created. */
+	
 	@Override
+	protected ScoreController getScoreController() {
+
+		return new ScoreController(false);
+	}
+	
+	/*@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		/* Second Tab Content */
 		/*TextView textView = new TextView(this);
 textView.setText("Local tab");
-setContentView(textView);*/
+setContentView(textView);*
 		setContentView(R.layout.tabletest);
 
 		TableLayout table = (TableLayout) findViewById(R.id.tableLayoutScores);
@@ -59,7 +66,7 @@ row.addView(tv);
 tv = new TextView(this);
 tv.setText("Test info 3b");
 row.addView(tv);
-table.addView(row);*/
+table.addView(row);*
 
 		ScoreController sCtrl = new ScoreController(false);
 		
@@ -86,6 +93,6 @@ table.addView(row);*/
 		row.addView(tv);
 		table.addView(row);
 
-	}
+	}*/
 
 }

@@ -102,13 +102,17 @@ public class QuestionController {
 		String answer="";
 		try {
 			int ans = list.get(q-1).getRightAnswer();
-			answer = (list.get(q-1).getAnswers())[ans];
+			answer = (list.get(q-1).getAnswers())[ans-1];
 		}
 		catch (Exception e) {
 			Log.d("QUIZTRIVIAL", e.getMessage());
 		}
 		
 		return answer;
+	}
+	
+	public int getHelp() {
+		return list.get(q-1).getHelp()-1;
 	}
 	
 	public int getScore() {

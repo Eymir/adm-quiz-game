@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"> 
+  <item android:icon="@drawable/question_mark_icon_48" android:id="@+id/options_settings"  
+        android:title="Settings"></item> 
+  <item android:id="@+id/options_help" android:title="Help" 
+        android:icon="@drawable/question_mark_icon_48"></item> 
+</menu>
