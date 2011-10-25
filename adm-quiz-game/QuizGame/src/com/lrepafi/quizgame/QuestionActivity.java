@@ -2,6 +2,9 @@ package com.lrepafi.quizgame;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MenuInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.app.Dialog.*;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 
 
 
@@ -22,12 +26,13 @@ public class QuestionActivity extends Activity {
 	
 	QuestionController qController = new QuestionController();
 	//Button btnPlay = (Button) findViewById(R.id.btnPlay);
-	Button[] answerBtn = new Button[5];
+	Button[] answerBtn = new Button[4];
 	TextView questionText = null;
 	TextView questionTextN = null;
 	TextView scoreText = null;
 	ProgressBar progress = null;
-	int time=70;
+	private final int TOTAL_TIME=70;
+	int time;
 	myAsyncTask task = null;
 	boolean stop=false;
 	
@@ -40,15 +45,14 @@ public class QuestionActivity extends Activity {
 	        qController.init();
 	        
 	        //Binding button/variables
-	        questionTextN = (TextView) findViewById(R.id.textViewQuestionN);
 	        questionText = (TextView) findViewById(R.id.textViewQuestion);
+	        questionTextN = (TextView) findViewById(R.id.textViewQuestionN);
 	        scoreText = (TextView) findViewById(R.id.textViewScore);
 	        progress = (ProgressBar) findViewById(R.id.progressBar1);
 	        answerBtn[0] = (Button) findViewById(R.id.btnAnswer1);
 	        answerBtn[1] = (Button) findViewById(R.id.btnAnswer2);
 	        answerBtn[2] = (Button) findViewById(R.id.btnAnswer3);
 	        answerBtn[3] = (Button) findViewById(R.id.btnAnswer4);
-	        answerBtn[4] = (Button) findViewById(R.id.btnAnswer5);
 	        
 	        //Adding onclick listeners to every button
 	        	
@@ -92,25 +96,36 @@ public class QuestionActivity extends Activity {
 	        	
 	        	
 	        });
-	        
-	        answerBtn[4].setOnClickListener(new OnClickListener() {
-
-	        	public void onClick(View v) {
-				
-	        		answer(4);
-	        	}
-	        	
-	        	
-	        });
-	        
+	        	        
 	        //Load first question
 	        loadQuestion();
 	        	
 	        
 	   }
 	   
+	   @Override 
+	   public boolean onCreateOptionsMenu(Menu menu) { 
+	     // TODO Auto‐generated method stub 
+	     MenuInflater inflater = getMenuInflater(); 
+	     inflater.inflate(R.menu.question, menu); 
+	     return true; 
+	   }
+
 	   
-	   private void loadQuestion() {
+	   
+	   @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		   int n = qController.getHelp();
+		   answerBtn[n].setTextColor(Color.GRAY);
+		   
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void loadQuestion() {
+		
+		for (int k=0;k<answerBtn.length;k++) answerBtn[k].setTextColor(Color.WHITE);
+		
 		   Question q = qController.getNextQuestion();
 		   
 		   if (q == null) {
@@ -133,14 +148,16 @@ public class QuestionActivity extends Activity {
 			   
 			   questionText.setText(q.getQuestionText());
 			   questionTextN.setText("Question "+qController.getQuestionNumber());
-			   
+			   			   
 			   for(int i=0;i<4;i++) {
 				   answerBtn[i].setText((q.getAnswers())[i]);
 			   }
+
+			   time=10*TOTAL_TIME;
 			   
-			   progress.setMax(70); //Progress range of 7 sec  = 70 time units of 100ms
-			   progress.setProgress(70);
-			   time=70;
+			   progress.setMax(time);
+			   progress.setProgress(time);
+
 			   
 			   task = new myAsyncTask();
 			   task.execute();
@@ -176,8 +193,8 @@ public class QuestionActivity extends Activity {
 			   message = "Yeah!You got the answer!";
 		   }
 		   else {
-			   //message = "Sorry!The correct answer was "+correctAns;
-			   message = "Sorry!Your answer was wrong!";
+			   message = "Sorry!The correct answer was "+correctAns;
+			   //message = "Sorry!Your answer was wrong!";
 		   }
 		   
 
@@ -238,10 +255,7 @@ public class QuestionActivity extends Activity {
 			   
 			   if(stop) return null;
 			   
-			   
-			   //TODO code for void time
-
-			   
+			  			   
 			   return null;
 		   }
 		   @Override

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"> 
+  <item android:icon="@drawable/question_mark_icon_48" android:id="@+id/question_help"  
+        android:title="Help"></item> 
+</menu>
+

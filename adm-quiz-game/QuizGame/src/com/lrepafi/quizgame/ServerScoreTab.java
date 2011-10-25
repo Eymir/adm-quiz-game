@@ -11,9 +11,17 @@ import 	android.view.ViewGroup.LayoutParams;
 import android.util.Log;
 import android.graphics.Color;
 
-public class ServerScoreTab extends Activity {
-	/** Called when the activity is first created. */
+public class ServerScoreTab extends ScoreTab {
+
 	@Override
+	protected ScoreController getScoreController() {
+
+		return new ScoreController(true);
+	}
+	
+	
+	/** Called when the activity is first created. */
+/*	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 
@@ -68,5 +76,5 @@ public class ServerScoreTab extends Activity {
 		row.addView(tv);
 		table.addView(row);
 		
-	}
+	}*/
 }
