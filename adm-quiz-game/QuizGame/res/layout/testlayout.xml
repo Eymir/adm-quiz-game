@@ -31,6 +31,8 @@
 	<Button android:layout_height="wrap_content" android:id="@+id/btnAnswer3" android:gravity="center|center_horizontal" android:layout_width="match_parent" android:background="@drawable/almost_transparent" android:text="Answer 3" android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" android:textStyle="bold"></Button>
 	<Button android:layout_height="wrap_content" android:id="@+id/btnAnswer4" android:gravity="center|center_horizontal" android:layout_width="match_parent" android:background="@drawable/almost_transparent" android:text="Answer 4" android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" android:textStyle="bold"></Button>
 	<Button android:layout_height="wrap_content" android:id="@+id/btnAnswer5" android:gravity="center|center_horizontal" android:layout_width="match_parent" android:background="@drawable/almost_transparent" android:text="Answer 5" android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" android:textStyle="bold"></Button>
+	<CheckedTextView android:text="CheckedTextView" android:id="@+id/checkedTextView1" android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckedTextView>
+	
 	
 	
 </LinearLayout>
