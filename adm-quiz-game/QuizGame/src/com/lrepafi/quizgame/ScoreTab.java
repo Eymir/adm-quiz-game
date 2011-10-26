@@ -48,6 +48,7 @@ public class ScoreTab extends Activity {
 		tv.setTypeface(null, Typeface.BOLD);
 		tv.setTextSize(25);
 		tv.setTextColor(Color.RED);
+		tv.setPadding(10, 0, 10, 0);
 		row.addView(tv);
 		tv = new TextView(this);
 		tv.setText("Ranking");
@@ -78,6 +79,7 @@ public class ScoreTab extends Activity {
 		tv = new TextView(c);
 		tv.setText(String.valueOf(s.getScore()));
 		tv.setTextSize(20);
+		tv.setPadding(10, 0, 10, 0);
 		row.addView(tv);
 		tv = new TextView(c);
 		tv.setText(String.valueOf(ranking));

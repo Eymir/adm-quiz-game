@@ -32,29 +32,36 @@ public class SettingsActivity extends Activity {
 	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	        spinner.setAdapter(adapter);
 
-	        spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+	        spinner.setOnItemSelectedListener(new MyOnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view,
+						int pos, long id) {
+					// TODO Auto-generated method stub
+					settingCtrl.updateServer( (String)parent.getItemAtPosition(pos));
+					super.onItemSelected(parent, view, pos, id);
+				}
+	        	
+	        });
 	        
 	        Button btnPrefs = (Button) findViewById(R.id.buttonSelectPreferences);
 	        btnPrefs.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					
-					final CharSequence[] items = {Category.LITERATURE.toString(), "Green", "Blue"};
-					final boolean values[] = {false, false, false};
+										
+					final CharSequence[] items = settingCtrl.getPrefsKeys();
+										
+					final boolean[] values= settingCtrl.getPrefsValues();
 
 					AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-					builder.setTitle("Pick a color");
-					/*builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
-					    public void onClick(DialogInterface dialog, int item) {
-					        Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
-					    }
-					});*/
+					builder.setTitle("Question preferences");
 					
 					builder.setMultiChoiceItems(items, values, new DialogInterface.OnMultiChoiceClickListener() {
 						
 						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 							// TODO Auto-generated method stub
+							settingCtrl.updatePreference(which, isChecked);
 							Toast.makeText(getApplicationContext(), items[which], Toast.LENGTH_SHORT).show();
-							   
+   
 						}
 					});
 					AlertDialog alert = builder.create();
