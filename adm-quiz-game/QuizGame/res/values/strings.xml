@@ -10,8 +10,11 @@
     <string name="settings">Settings</string>
     <string name="help">Help</string> 
     <string name="question">Question</string>       
+    <string name="credit_text">para el curso de Applicaciones mobiles</string>
+	<string name="credit_autor">Lorenzo Pavez y François Rixain</string>
+	<string name="credit_title">TRIVIAL PURSUIT</string>
     
-    <string name="server_prompt">Choose a server</string>
+    <string name="server_prompt">Choose a server</string>    
     <string-array name="server_array">
         <item>1</item>
         <item>2</item>

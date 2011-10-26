@@ -1,16 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:background="@drawable/almost_transparent">
-    <RelativeLayout android:layout_width="match_parent" android:id="@+id/relativeLayout1" android:layout_height="wrap_content" android:layout_marginTop="10dip">
-       <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textViewSettings" android:layout_centerHorizontal="true" android:text="@string/settings" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold"></TextView>
-		<ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView1" android:layout_toLeftOf="@id/textViewSettings" android:layout_marginRight="10dip"></ImageView>
-        <ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView2" android:layout_toRightOf="@id/textViewSettings" android:layout_marginLeft="10dip"></ImageView>
-     </RelativeLayout>
-          
-    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/almost_transparent"
+    android:orientation="vertical" >
 
-	
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" >
+
+        <TextView
+            android:id="@+id/textViewSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/credits"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold" >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@id/textViewSettings"
+            android:src="@drawable/question_mark_icon_48" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@id/textViewSettings"
+            android:src="@drawable/question_mark_icon_48" >
+        </ImageView>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/credit_title"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:bufferType="editable"
+        android:gravity="center"
+        android:paddingTop="10dip"
+        android:text="@string/credit_text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="10dip"
+        android:paddingTop="10dip"
+        android:text="@string/credit_autor"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+   <!-- <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="100dp"
+        android:layout_height="125dp"
+        android:src="@drawable/photoFrancois" />
+-->
 </LinearLayout>
