@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/almost_transparent"
+    android:background="@drawable/nuageciel"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -42,40 +42,59 @@
         </ImageView>
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView3"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/credit_title"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_marginTop="30dip"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:bufferType="editable"
-        android:gravity="center"
-        android:paddingTop="10dip"
-        android:text="@string/credit_text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/credit_title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textView2"
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:bufferType="editable"
+            android:gravity="center"
+            android:paddingTop="10dip"
+            android:text="@string/credit_text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="10dip"
+            android:paddingTop="10dip"
+            android:text="@string/credit_autor"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minHeight="10dip"
-        android:paddingTop="10dip"
-        android:text="@string/credit_autor"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="40dip" >
 
-   <!-- <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="100dp"
-        android:layout_height="125dp"
-        android:src="@drawable/photoFrancois" />
--->
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100dp"
+            android:layout_height="167dp"
+            android:src="@drawable/photofrancois" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/lorenzo" />
+    </LinearLayout>
+
 </LinearLayout>
