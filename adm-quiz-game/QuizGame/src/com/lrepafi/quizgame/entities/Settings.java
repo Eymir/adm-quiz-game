@@ -1,18 +1,25 @@
 package com.lrepafi.quizgame.entities;
 import java.util.ArrayList;
+import java.util.*;
 
 public class Settings {
 	
 	private String username;
 	private String serverName;
 	private String email;
-	private ArrayList<Category> preferences;
+	private ArrayList<Preference> preferences;
 	
 	public Settings() {
-		preferences = new ArrayList<Category>();
+		preferences = new ArrayList<Preference>();
 		username = "";
 		serverName="";
 		email="";
+				
+		preferences.add(new Preference("Sports", false));
+		preferences.add(new Preference("Literature", false));
+		preferences.add(new Preference("Science", false));
+		preferences.add(new Preference("Movies", false));
+		preferences.add(new Preference("History", false));
 		
 	}
 	
@@ -40,15 +47,15 @@ public class Settings {
 		this.email = email;
 	}
 
-	public ArrayList<Category> getPreferences() {
+	public ArrayList<Preference> getPreferences() {
 		return preferences;
 	}
 	
-	public void addPreferences(Category cat) {
+	public void addPreferences(Preference cat) {
 		preferences.add(cat);
 	}
 
-	public void setPreferences(ArrayList<Category> preferences) {
+	public void setPreferences(ArrayList<Preference> preferences) {
 		this.preferences = preferences;
 	}
 
