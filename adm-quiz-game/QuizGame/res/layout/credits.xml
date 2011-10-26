@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" android:background="@drawable/almost_transparent">
+    <RelativeLayout android:layout_width="match_parent" android:id="@+id/relativeLayout1" android:layout_height="wrap_content" android:layout_marginTop="10dip">
+       <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textViewSettings" android:layout_centerHorizontal="true" android:text="@string/settings" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold"></TextView>
+		<ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView1" android:layout_toLeftOf="@id/textViewSettings" android:layout_marginRight="10dip"></ImageView>
+        <ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView2" android:layout_toRightOf="@id/textViewSettings" android:layout_marginLeft="10dip"></ImageView>
+     </RelativeLayout>
+          
+    
+
+	
+</LinearLayout>
