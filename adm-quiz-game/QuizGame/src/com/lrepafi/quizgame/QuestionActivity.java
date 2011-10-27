@@ -124,7 +124,9 @@ public class QuestionActivity extends Activity {
 
 	private void loadQuestion() {
 		
-		for (int k=0;k<answerBtn.length;k++) answerBtn[k].setTextColor(Color.WHITE);
+		for (int k=0;k<answerBtn.length;k++) answerBtn[k].setTextColor(QuestionActivity.this.getResources().getColor(R.color.questions_items));
+		//		(R.color.questions_items);
+
 		
 		   Question q = qController.getNextQuestion();
 		   
@@ -263,7 +265,14 @@ public class QuestionActivity extends Activity {
 		   // TODO Auto-generated method stub
 			   progress.setProgress(time);
 			   
-			   if(time<=0) showEndTime();
+			   if(time<=0) {
+				   try {
+					   showEndTime();
+				   }
+				   catch (Exception e) {
+					   Log.d("QUIZGAME", "Timeout screen in AsyncTask: "+e.getMessage());
+				   }
+			   }
 
 			   return;
 		   		}

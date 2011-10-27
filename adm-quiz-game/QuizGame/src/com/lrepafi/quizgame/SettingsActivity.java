@@ -60,7 +60,8 @@ public class SettingsActivity extends Activity {
 						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 							// TODO Auto-generated method stub
 							settingCtrl.updatePreference(which, isChecked);
-							Toast.makeText(getApplicationContext(), items[which], Toast.LENGTH_SHORT).show();
+							updatePreferenceText();
+							//Toast.makeText(getApplicationContext(), items[which], Toast.LENGTH_SHORT).show();
    
 						}
 					});
@@ -75,6 +76,11 @@ public class SettingsActivity extends Activity {
 
 	   }
 	   
+	   private void updatePreferenceText() {
+		   
+		   TextView text = (TextView) findViewById(R.id.textViewPreferences);
+		   text.setText("Question preferenced setted");
+	   }
 	   /*@Override
 	   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 

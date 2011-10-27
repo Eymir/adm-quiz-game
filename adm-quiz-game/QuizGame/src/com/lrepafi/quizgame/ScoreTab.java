@@ -24,7 +24,7 @@ public class ScoreTab extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.tabletest);
+		setContentView(R.layout.tablescore);
 		
 		sCtrl = getScoreController();
 		drawTable();
@@ -75,15 +75,18 @@ public class ScoreTab extends Activity {
 		TextView tv = new TextView(c);
 		tv.setText(s.getUsername());
 		tv.setTextSize(20);
+		tv.setTextColor(Color.BLACK);
 		row.addView(tv);
 		tv = new TextView(c);
 		tv.setText(String.valueOf(s.getScore()));
 		tv.setTextSize(20);
 		tv.setPadding(10, 0, 10, 0);
+		tv.setTextColor(Color.BLACK);
 		row.addView(tv);
 		tv = new TextView(c);
 		tv.setText(String.valueOf(ranking));
 		tv.setTextSize(20);
+		tv.setTextColor(Color.BLACK);
 		row.addView(tv);
 		table.addView(row);
 

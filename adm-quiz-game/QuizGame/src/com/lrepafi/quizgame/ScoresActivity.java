@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.*;
 import android.widget.TabHost.TabSpec;
 import android.content.Intent;
+import android.graphics.Color;
 import android.app.TabActivity;
 
 public class ScoresActivity extends TabActivity {
@@ -19,11 +20,13 @@ public class ScoresActivity extends TabActivity {
 	        mTabHost = getTabHost();
 	        
 	        //mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("TAB 1",getResources().getDrawable(R.drawable.question_mark_icon_48)).setContent(R.id.tableLayout1));
-	        mTabHost.addTab(mTabHost.newTabSpec("TAB1").setIndicator("Local users",getResources().getDrawable(R.drawable.question_mark_icon_48)).setContent(new Intent(this, LocalScoreTab.class)));
-	        mTabHost.addTab(mTabHost.newTabSpec("TAB2").setIndicator("User friends",getResources().getDrawable(R.drawable.question_mark_icon_48)).setContent(new Intent(this, ServerScoreTab.class)));
+	        mTabHost.addTab(mTabHost.newTabSpec("TAB1").setIndicator("Local users",getResources().getDrawable(R.drawable.local_users)).setContent(new Intent(this, LocalScoreTab.class)));
+	        mTabHost.addTab(mTabHost.newTabSpec("TAB2").setIndicator("User friends",getResources().getDrawable(R.drawable.remote_users)).setContent(new Intent(this, ServerScoreTab.class)));
 	        
 	        mTabHost.setCurrentTab(0);
-
+	        
+	        mTabHost.getTabWidget().getChildAt(0).setBackgroundColor(Color.parseColor("#111177"));
+	        mTabHost.getTabWidget().getChildAt(1).setBackgroundColor(Color.parseColor("#111177"));
 	        
 	       /* TabHost host = (TabHost) findViewById(R.id.tabhost);
 	        host.setup();
