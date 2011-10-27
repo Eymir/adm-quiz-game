@@ -1,20 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/nuageciel"
-    android:orientation="vertical" >
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:background="@drawable/nuageciel" android:orientation="vertical">
 
-    <RelativeLayout android:layout_width="match_parent" android:id="@+id/relativeLayout1" android:layout_height="wrap_content" android:layout_marginTop="10dip">
-       <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/textView1" android:layout_centerHorizontal="true" android:text="@string/mainmenu" android:textColor="@android:color/darker_gray" android:layout_centerVertical="true" android:textStyle="bold"></TextView>
-		<ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView1" android:layout_toLeftOf="@id/textView1" android:layout_marginRight="10dip"></ImageView>
-        <ImageView android:src="@drawable/question_mark_icon_48" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView2" android:layout_toRightOf="@id/textView1" android:layout_marginLeft="10dip"></ImageView>
-     </RelativeLayout>
-    <Button android:layout_height="wrap_content" android:id="@+id/btnPlay" android:gravity="center|center_horizontal" android:layout_width="match_parent" android:background="@drawable/almost_transparent" android:text="@string/play" android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" android:textStyle="bold"></Button>
-	<Button android:layout_height="wrap_content" android:id="@+id/btnScores" android:gravity="center|center_horizontal" android:layout_width="match_parent" android:background="@drawable/almost_transparent" android:text="@string/scores" android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" android:textStyle="bold"></Button>
-	<Button android:layout_height="wrap_content" android:id="@+id/btnCredits" android:gravity="center|center_horizontal" android:layout_width="match_parent" android:background="@drawable/almost_transparent" android:text="@string/credits" android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" android:textStyle="bold"></Button>
-	<!--  <Button android:layout_height="wrap_content" android:id="@+id/button4" android:gravity="center|center_horizontal" android:layout_width="match_parent" android:background="@drawable/almost_transparent" android:text="@string/settings" android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" android:textStyle="bold"></Button>
-	<Button android:layout_height="wrap_content" android:id="@+id/button5" android:gravity="center|center_horizontal" android:layout_width="match_parent" android:background="@drawable/almost_transparent" android:text="@string/help" android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" android:textStyle="bold"></Button>
-	-->
-	
+	<RelativeLayout android:layout_width="match_parent"
+		android:id="@+id/relativeLayout1" android:layout_height="wrap_content"
+		android:layout_marginTop="10dip">
+		<TextView android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content" android:id="@+id/textView1"
+			android:layout_centerHorizontal="true" android:text="@string/mainmenu"
+			android:textColor="@android:color/black"
+			android:layout_centerVertical="true" android:textStyle="bold"></TextView>
+		<ImageView android:src="@drawable/question_mark_blue"
+			android:layout_width="100px" android:layout_height="100px"
+			android:id="@+id/imageView1" android:layout_toLeftOf="@id/textView1"
+			android:layout_marginRight="10dip"></ImageView>
+		<ImageView android:src="@drawable/question_mark_blue"
+			android:layout_width="100px" android:layout_height="100px"
+			android:id="@+id/imageView2" android:layout_toRightOf="@id/textView1"
+			android:layout_marginLeft="10dip"></ImageView>
+	</RelativeLayout>
+
+	<RelativeLayout android:layout_width="match_parent"
+		android:id="@+id/relativeLayout2" android:layout_height="wrap_content"
+		android:layout_marginTop="10dip">
+		<Button android:layout_height="80px" android:id="@+id/btnPlay"
+			android:gravity="center|center_horizontal" android:layout_width="wrap_content"
+			android:background="@drawable/cloud_3" android:text="@string/play"
+			android:textSize="20dip" android:textColor="@color/dashboard_items"
+			android:layout_marginTop="10dip" android:textStyle="bold"
+			android:layout_centerHorizontal="true"></Button>
+	</RelativeLayout>
+
+	<RelativeLayout android:layout_width="match_parent"
+		android:id="@+id/relativeLayout3" android:layout_height="wrap_content"
+		android:layout_marginTop="10dip">
+		<Button android:layout_height="80px" android:id="@+id/btnScores"
+			android:gravity="center|center_horizontal" android:layout_width="wrap_content"
+			android:background="@drawable/cloud_3" android:text="@string/scores"
+			android:textSize="20dip" android:textColor="@color/dashboard_items"
+			android:layout_marginTop="10dip" android:textStyle="bold"
+			android:layout_centerHorizontal="true"></Button>
+	</RelativeLayout>
+
+	<RelativeLayout android:layout_width="match_parent"
+		android:id="@+id/relativeLayout4" android:layout_height="wrap_content"
+		android:layout_marginTop="10dip">
+		<Button android:layout_height="80px" android:id="@+id/btnCredits"
+			android:gravity="center|center_horizontal" android:layout_width="wrap_content"
+			android:background="@drawable/cloud_3" android:text="@string/credits"
+			android:textSize="20dip" android:textColor="@color/dashboard_items"
+			android:layout_marginTop="10dip" android:textStyle="bold"
+			android:layout_centerHorizontal="true"></Button>
+	</RelativeLayout>
+
+	<!-- <Button android:layout_height="wrap_content" android:id="@+id/btnScores" 
+		android:gravity="center|center_horizontal" android:layout_width="match_parent" 
+		android:background="@drawable/almost_transparent" android:text="@string/scores" 
+		android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" 
+		android:textStyle="bold"></Button> <Button android:layout_height="wrap_content" 
+		android:id="@+id/btnCredits" android:gravity="center|center_horizontal" android:layout_width="match_parent" 
+		android:background="@drawable/almost_transparent" android:text="@string/credits" 
+		android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" 
+		android:textStyle="bold"></Button> -->
+
+	<!-- <Button android:layout_height="wrap_content" android:id="@+id/button4" 
+		android:gravity="center|center_horizontal" android:layout_width="match_parent" 
+		android:background="@drawable/almost_transparent" android:text="@string/settings" 
+		android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" 
+		android:textStyle="bold"></Button> <Button android:layout_height="wrap_content" 
+		android:id="@+id/button5" android:gravity="center|center_horizontal" android:layout_width="match_parent" 
+		android:background="@drawable/almost_transparent" android:text="@string/help" 
+		android:textSize="20dip" android:textColor="@android:color/white" android:layout_marginTop="10dip" 
+		android:textStyle="bold"></Button> -->
+
 </LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nuageciel"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" >
+
+        <TextView
+            android:id="@+id/textViewHelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/help"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@id/textViewHelp"
+            android:src="@drawable/question_mark_blue" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@id/textViewHelp"
+            android:src="@drawable/question_mark_blue" >
+        </ImageView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textViewInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/instructions_body"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        
+    </LinearLayout>
+
+</LinearLayout>

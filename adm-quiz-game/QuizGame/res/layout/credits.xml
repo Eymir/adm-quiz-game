@@ -1,100 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/nuageciel"
-    android:orientation="vertical" >
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:background="@drawable/nuageciel" android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip" >
+	<RelativeLayout android:id="@+id/relativeLayout1"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_marginTop="10dip">
 
-        <TextView
-            android:id="@+id/textViewSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/credits"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/darker_gray"
-            android:textStyle="bold" >
-        </TextView>
+		<TextView android:id="@+id/textViewSettings"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+			android:text="@string/credits" android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textColor="@android:color/black" android:textStyle="bold">
+		</TextView>
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dip"
-            android:layout_toLeftOf="@id/textViewSettings"
-            android:src="@drawable/question_mark_icon_48" >
-        </ImageView>
+		<ImageView android:id="@+id/imageView1"
+			android:layout_width="100px" android:layout_height="100px"
+			android:layout_marginRight="10dip" android:layout_toLeftOf="@id/textViewSettings"
+			android:src="@drawable/question_mark_blue">
+		</ImageView>
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_toRightOf="@id/textViewSettings"
-            android:src="@drawable/question_mark_icon_48" >
-        </ImageView>
-    </RelativeLayout>
+		<ImageView android:id="@+id/imageView2"
+			android:layout_width="100px" android:layout_height="100px"
+			android:layout_marginLeft="10dip" android:layout_toRightOf="@id/textViewSettings"
+			android:src="@drawable/question_mark_blue">
+		</ImageView>
+	</RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dip"
-        android:orientation="vertical" >
+	<LinearLayout android:id="@+id/linearLayout2"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_marginTop="30dip" android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/credit_title"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+		<TextView android:id="@+id/textView3" android:layout_width="match_parent"
+			android:layout_height="wrap_content" android:gravity="center"
+			android:text="@string/credit_title" android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:bufferType="editable"
-            android:gravity="center"
-            android:paddingTop="10dip"
-            android:text="@string/credit_text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+		<TextView android:id="@+id/textView1" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:bufferType="editable"
+			android:gravity="center" android:paddingTop="10dip" android:text="@string/credit_text"
+			android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="10dip"
-            android:paddingTop="10dip"
-            android:text="@string/credit_autor"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
+		<TextView android:id="@+id/textView2" android:layout_width="match_parent"
+			android:layout_height="wrap_content" android:gravity="center"
+			android:minHeight="10dip" android:paddingTop="10dip" android:text="@string/credit_autor"
+			android:textAppearance="?android:attr/textAppearanceMedium" />
+	</LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dip" >
+	<LinearLayout android:id="@+id/linearLayout1"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_marginTop="40dip">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="100dp"
-            android:layout_height="167dp"
-            android:src="@drawable/photofrancois" />
+		<ImageView android:id="@+id/imageView3"
+			android:layout_width="100dp" android:layout_height="167dp"
+			android:src="@drawable/photofrancois" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/lorenzo" />
-    </LinearLayout>
+		<ImageView android:id="@+id/imageView4"
+			android:layout_width="match_parent" android:layout_height="match_parent"
+			android:src="@drawable/lorenzo" />
+	</LinearLayout>
 
 </LinearLayout>
