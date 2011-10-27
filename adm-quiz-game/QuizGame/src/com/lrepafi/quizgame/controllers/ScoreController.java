@@ -5,11 +5,11 @@ import com.lrepafi.quizgame.entities.*;
 public class ScoreController {
 
 	ArrayList<Score> scores = new ArrayList<Score>();
-	
+
 	//FIXME The code below has to be removed until method load and persist are implemented
-	
+
 	public ScoreController(boolean server) {
-		
+
 		if (!server) {
 			scores.add(new Score("netlopa",51000));
 			scores.add(new Score("marcinho",43100));
@@ -18,7 +18,7 @@ public class ScoreController {
 				scores.add(new Score("local"+i,cscore));
 				cscore-=1000;
 			}
-			
+
 		}
 		else {
 			scores.add(new Score("netlopa",61000));
@@ -29,9 +29,9 @@ public class ScoreController {
 				cscore-=1000;				
 			}
 		}
-		
+
 	}
-	
+
 	public ArrayList<Score> getScores() {
 		return scores;
 	}
@@ -43,24 +43,24 @@ public class ScoreController {
 	private void load() {
 		//TODO
 	}
-	
+
 	private void persist() {
 		//TODO
 	}
-	
+
 	private void load(String server) {
 		//TODO
 	}
-		
+
 	public void addScore(String username, int score) {
 		//TODO
 	}
-	
+
 	public void deleteAll() {
 		scores = new ArrayList<Score>();
 		persist();
 	}
 
-	
-	
+
+
 }

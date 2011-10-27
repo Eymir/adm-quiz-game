@@ -6,7 +6,7 @@ public class Question {
 	String[] answers;
 	int rightAnswer;
 	int help;
-	
+
 	public String getSubject() {
 		return subject;
 	}
