@@ -4,12 +4,12 @@ public class Preference {
 
 	private String pref;
 	private boolean value;
-	
+
 	public Preference(String pref, boolean value) {
 		this.pref=pref;
 		this.value=value;
 	}
-	
+
 	public String getPref() {
 		return pref;
 	}
@@ -22,6 +22,6 @@ public class Preference {
 	public void setValue(boolean value) {
 		this.value = value;
 	}
-	
-	
+
+
 }
