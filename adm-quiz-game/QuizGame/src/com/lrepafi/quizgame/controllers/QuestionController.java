@@ -1,8 +1,12 @@
 package com.lrepafi.quizgame.controllers;
 
 import java.util.*;
-import com.lrepafi.quizgame.entities.*;
 
+import com.lrepafi.quizgame.QuestionActivity;
+import com.lrepafi.quizgame.entities.*;
+import com.lrepafi.quizgame.utils.XMLScoreFactory;
+
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -15,6 +19,11 @@ public class QuestionController {
 	public static String PREFERENCES_CATEGORY_PREFIX = "Category";
 	
 	private Settings settings = new Settings();
+	
+	private QuestionActivity caller;
+	public QuestionController(QuestionActivity caller) {
+		this.caller=caller;
+	}
 	
 	public void setScore(int score) {
 		this.score = score;
@@ -52,11 +61,26 @@ public class QuestionController {
 	
 	private void saveScore() {
 		//TODO
+		XMLScoreFactory s = new XMLScoreFactory();
+		ArrayList<Score>scores = s.load(caller.getFileInputStream());
+		int index=0;
+		for(int i=0;i<scores.size();i++) {
+			if (scores.get(i).getScore()>=this.score) index=i;
+		}
+		
+		Score current = new Score(this.settings.getUsername(), this.score);
+		scores.add(index, current);
+		
+		s.save(caller.getFileOutputStream(), scores);
+		
 	}
 	
 	public void init() {
 		//TODO add sql binding for retrieve question
 
+		
+		
+		
 		Question question = new Question();
 		question.setSubject("Literature");
 		question.setQuestionText("Who wrote the Dunwich Horror?");

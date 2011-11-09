@@ -1,12 +1,52 @@
 package com.lrepafi.quizgame;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import android.content.Context;
+
 import com.lrepafi.quizgame.controllers.ScoreController;
 
 
 public class ServerScoreTab extends ScoreTab {
 
 	@Override
+	protected void loadData(ScoreController s) {
+		/*FIXME To delete this
+		FileOutputStream fos=null;
+		try {
+			fos = openFileOutput("scores.xml",  
+			        Context.MODE_PRIVATE);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		s.persist(fos);*/
+		
+	}
+	
+	@Override
 	protected ScoreController getScoreController() {
+
+		/*FileOutputStream fos=null;
+		try {
+			fos = openFileOutput("scores.xml",  
+			        Context.MODE_PRIVATE);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		FileInputStream fin=null;
+		try {
+			fin = openFileInput("scores.xml");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+*/
 
 		return new ScoreController(true);
 	}

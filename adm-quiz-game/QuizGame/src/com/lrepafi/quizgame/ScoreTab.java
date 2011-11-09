@@ -22,8 +22,14 @@ public class ScoreTab extends Activity {
 		setContentView(R.layout.tablescore);
 
 		sCtrl = getScoreController();
+		loadData(sCtrl);
+		
 		drawTable();
 
+	}
+	
+	protected void loadData(ScoreController s) {
+		
 	}
 
 	protected void drawTable() {
