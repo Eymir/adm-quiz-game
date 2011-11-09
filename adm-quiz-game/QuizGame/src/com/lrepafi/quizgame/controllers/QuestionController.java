@@ -50,6 +50,10 @@ public class QuestionController {
 		init();
 	}
 	
+	private void saveScore() {
+		//TODO
+	}
+	
 	public void init() {
 		//TODO add sql binding for retrieve question
 
@@ -123,7 +127,10 @@ public class QuestionController {
 	public Question getNextQuestion() {
 
 		if (q < list.size()) return list.get(q++);
-		else return null;
+		else {
+			saveScore();
+			return null;
+		}
 
 	}
 

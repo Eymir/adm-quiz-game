@@ -26,13 +26,13 @@ public class HelpActivity extends Activity {
 		DataInputStream dataStream = new DataInputStream(inputStream); 
 		String instructions = "";
 		try { 
-			
-while(true) {
-					String line=dataStream.readLine();
-					if (line == null) break; 
-					instructions = instructions+line+"\n"; 
-}
-			
+
+			while(true) {
+				String line=dataStream.readLine();
+				if (line == null) break; 
+				instructions = instructions+line+"\n"; 
+			}
+
 			dataStream.close(); 
 			inputStream.close(); 
 		} 
