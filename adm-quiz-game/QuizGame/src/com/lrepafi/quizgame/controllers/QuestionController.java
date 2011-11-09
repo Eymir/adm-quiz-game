@@ -2,14 +2,28 @@ package com.lrepafi.quizgame.controllers;
 
 import java.util.*;
 import com.lrepafi.quizgame.entities.*;
+
+import android.content.SharedPreferences;
 import android.util.Log;
 
 public class QuestionController {
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public void setQ(int q) {
+		this.q = q;
+	}
 
 	private List<Question> list = new ArrayList<Question>();
 	int q=0;
 	int score=0;
 
+	public void init(SharedPreferences prefs) {
+		
+	}
+	
 	public void init() {
 		// TODO Auto-generated method stub
 		//List<Question> list = new ArrayList<Question>();
