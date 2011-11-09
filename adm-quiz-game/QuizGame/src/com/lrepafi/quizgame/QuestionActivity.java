@@ -1,5 +1,9 @@
 package com.lrepafi.quizgame;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuInflater;
@@ -33,7 +37,7 @@ public class QuestionActivity extends Activity {
 	private SharedPreferences preferences = null;
 		
 	
-	QuestionController qController = new QuestionController();
+	QuestionController qController = new QuestionController(this);
 	//Button btnPlay = (Button) findViewById(R.id.btnPlay);
 	Button[] answerBtn = new Button[4];
 	TextView questionText = null;
@@ -74,7 +78,7 @@ public class QuestionActivity extends Activity {
 		qController.setQ(preferences.getInt(PREFERENCES_QUESTION_NO, 0));
 		qController.setScore(preferences.getInt(PREFERENCES_QUESTION_SCORE, 0));
 		
-		qController.init();
+		qController.init(preferences);
 
 		//Binding button/variables
 		questionText = (TextView) findViewById(R.id.textViewQuestion);
@@ -316,8 +320,34 @@ public class QuestionActivity extends Activity {
 			return;
 		}
 	}
+	
+	public FileInputStream getFileInputStream() {
 
+	FileInputStream fin=null;
+	try {
+		fin = openFileInput("scores.xml");
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 
+	return fin;
+	
+	}
+	
+	public FileOutputStream getFileOutputStream() {
+		FileOutputStream fos=null;
+		try {
+			fos = openFileOutput("scores.xml",  
+			        Context.MODE_PRIVATE);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return fos;
+	}
+	
 }
 
 

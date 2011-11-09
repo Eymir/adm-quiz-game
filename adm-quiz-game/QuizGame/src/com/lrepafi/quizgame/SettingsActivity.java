@@ -63,7 +63,7 @@ public class SettingsActivity extends Activity {
 	        public void afterTextChanged(Editable s) {}
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 	        public void onTextChanged(CharSequence s, int start, int before, int count) {
-	            settingCtrl.getSettings().setUsername(editT.getText().toString());
+	            settingCtrl.getSettings().setUsername(editA.getText().toString());
 	            //Toast.makeText(SettingsActivity.this, "Cambiato", Toast.LENGTH_SHORT).show();
 	        }
 
