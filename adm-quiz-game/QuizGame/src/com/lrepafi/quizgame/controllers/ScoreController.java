@@ -10,6 +10,16 @@ public class ScoreController {
 
 	public ScoreController(boolean server) {
 
+		//TODO implement loading of scores
+		//use asynctask for manage the parsing
+		
+		/*
+		 * ScoresScreen.this.setProgressBarIndeterminate(true);
+ScoresScreen.this.setProgressBarIndeterminateVisibility(true); 
+
+		 */
+		
+		//Local
 		if (!server) {
 			scores.add(new Score("netlopa",51000));
 			scores.add(new Score("marcinho",43100));
