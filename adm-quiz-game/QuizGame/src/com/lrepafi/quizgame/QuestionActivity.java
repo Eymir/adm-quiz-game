@@ -11,7 +11,10 @@ import android.widget.*;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 
 
@@ -23,6 +26,13 @@ import com.lrepafi.quizgame.entities.*;
 
 public class QuestionActivity extends Activity {
 
+	public static String PREFERENCES = "QuizGamePreferences"; 
+	public static String PREFERENCES_TIME = "Time"; 
+	public static String PREFERENCES_QUESTION_NO = "QuestionNo";
+	public static String PREFERENCES_QUESTION_SCORE = "QuestionScore";
+	private SharedPreferences preferences = null;
+		
+	
 	QuestionController qController = new QuestionController();
 	//Button btnPlay = (Button) findViewById(R.id.btnPlay);
 	Button[] answerBtn = new Button[4];
@@ -36,11 +46,34 @@ public class QuestionActivity extends Activity {
 	boolean stop=false;
 
 	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		Editor editor = preferences.edit();
+		editor.putInt(PREFERENCES_QUESTION_SCORE, qController.getScore());
+		editor.putInt(PREFERENCES_TIME, time);
+		
+		if (qController.getQuestionNumber() > 0) editor.putInt(PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
+		else editor.putInt(PREFERENCES_QUESTION_NO, 0);
+		
+		
+		editor.commit();
+		
+		super.onPause();
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.question);
 
+		preferences = 
+		      getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+
+		time = preferences.getInt(PREFERENCES_TIME, 10*TOTAL_TIME);
+		qController.setQ(preferences.getInt(PREFERENCES_QUESTION_NO, 0));
+		qController.setScore(preferences.getInt(PREFERENCES_QUESTION_SCORE, 0));
+		
 		qController.init();
 
 		//Binding button/variables
@@ -96,6 +129,8 @@ public class QuestionActivity extends Activity {
 
 		});
 
+		//Update score on text
+		updateScore();
 		//Load first question
 		loadQuestion();
 
@@ -136,6 +171,9 @@ public class QuestionActivity extends Activity {
 			.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 
+					time=10*TOTAL_TIME;
+					qController.setQ(0);
+					qController.setScore(0);
 					QuestionActivity.this.finish();
 
 
@@ -154,9 +192,9 @@ public class QuestionActivity extends Activity {
 				answerBtn[i].setText((q.getAnswers())[i]);
 			}
 
-			time=10*TOTAL_TIME;
+			//time=10*TOTAL_TIME;
 
-			progress.setMax(time);
+			progress.setMax(10*TOTAL_TIME);
 			progress.setProgress(time);
 
 
@@ -207,6 +245,7 @@ public class QuestionActivity extends Activity {
 		.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
+				time=10*TOTAL_TIME;
 				loadQuestion();
 				dialog.cancel();
 
@@ -226,6 +265,7 @@ public class QuestionActivity extends Activity {
 		.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
+				time= 10*TOTAL_TIME;
 				loadQuestion();
 				dialog.cancel();
 
