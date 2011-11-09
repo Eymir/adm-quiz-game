@@ -1,0 +1,6 @@
+Welcome to the Quiz Game!
+You will have a pool of 5 questions to answer: for each question you have 10 seconds for answer
+And if you are unsure between 2 answer, you can press Menu->Help (in the game screen) and you will know what question is surely wrong
+Also, are you good in questions about Science, Movie and Sports but do you don't know anything about History and Literature?Good, you can set your preferences
+clicking on Menu->Settings in the dashboard!
+Enjoy the quiz game!!!

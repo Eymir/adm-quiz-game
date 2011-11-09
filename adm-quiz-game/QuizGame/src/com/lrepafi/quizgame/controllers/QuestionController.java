@@ -8,6 +8,14 @@ import android.util.Log;
 
 public class QuestionController {
 
+	public static String PREFERENCES = "QuizGamePreferences"; 
+	public static String PREFERENCES_USER_NAME = "UserName"; 
+	public static String PREFERENCES_EMAIL = "Email";
+	public static String PREFERENCES_SERVER_NAME = "ServerName";
+	public static String PREFERENCES_CATEGORY_PREFIX = "Category";
+	
+	private Settings settings = new Settings();
+	
 	public void setScore(int score) {
 		this.score = score;
 	}
@@ -20,13 +28,30 @@ public class QuestionController {
 	int q=0;
 	int score=0;
 
-	public void init(SharedPreferences prefs) {
+	private void loadSettings(SharedPreferences prefs) {
+		
+		
+		settings.setUsername(prefs.getString(PREFERENCES_USER_NAME, ""));
+		settings.setEmail(prefs.getString(PREFERENCES_EMAIL, ""));
+		settings.setServerName(prefs.getString(PREFERENCES_SERVER_NAME, ""));
+		
+		for(int i=0;i<settings.getPreferences().size();i++) {
+			
+			settings.getPreferences().get(i).setValue(prefs.getBoolean
+					(PREFERENCES_CATEGORY_PREFIX+settings.getPreferences().get(i).getPref(),
+							false));
+
+		}		
 		
 	}
 	
+	public void init(SharedPreferences prefs) {
+		loadSettings(prefs);
+		init();
+	}
+	
 	public void init() {
-		// TODO Auto-generated method stub
-		//List<Question> list = new ArrayList<Question>();
+		//TODO add sql binding for retrieve question
 
 		Question question = new Question();
 		question.setSubject("Literature");

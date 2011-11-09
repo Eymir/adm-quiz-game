@@ -31,7 +31,7 @@ public class SettingController {
 	}
 
 	public void persist(SharedPreferences prefs) {
-		//TODO
+		
 		
 		Editor editor = prefs.edit();
 		editor.putString(PREFERENCES_USER_NAME, settings.getUsername());
@@ -59,7 +59,7 @@ public class SettingController {
 	}
 
 	public void load(SharedPreferences prefs) {
-		//TODO
+		
 		
 		settings.setUsername(prefs.getString(PREFERENCES_USER_NAME, ""));
 		settings.setEmail(prefs.getString(PREFERENCES_EMAIL, ""));

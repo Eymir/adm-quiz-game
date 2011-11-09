@@ -1,8 +1,13 @@
 package com.lrepafi.quizgame;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 
@@ -14,11 +19,35 @@ public class HelpActivity extends Activity {
 		setContentView(R.layout.instructions);
 
 		final TextView txtInstructions = (TextView) findViewById(R.id.textViewInstructions);
-		txtInstructions.setText(instructions());
+		//txtInstructions.setText(instructions());
 		txtInstructions.setTextColor(Color.BLACK);
+
+		InputStream inputStream = getResources().openRawResource(R.raw.help); 
+		DataInputStream dataStream = new DataInputStream(inputStream); 
+		String instructions = "";
+		try { 
+			
+while(true) {
+					String line=dataStream.readLine();
+					if (line == null) break; 
+					instructions = instructions+line+"\n"; 
+}
+			
+			dataStream.close(); 
+			inputStream.close(); 
+		} 
+		catch (IOException ioe) { 
+			Log.d("PURSUIT", "Error while reading myFile"); 
+		}
+
+		txtInstructions.setText(instructions);
+
 
 	}
 
+	/*
+	 * deprecated
+	 */
 	//TODO this method will be deprecated when we implement raw storage
 	public String instructions() {
 		String res = new String();
