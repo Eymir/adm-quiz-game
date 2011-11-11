@@ -13,6 +13,8 @@ import com.lrepafi.quizgame.QuestionActivity;
 import com.lrepafi.quizgame.R;
 import com.lrepafi.quizgame.entities.*;
 import com.lrepafi.quizgame.utils.DataBaseHelper;
+import com.lrepafi.quizgame.utils.Globals;
+import com.lrepafi.quizgame.utils.Helpers;
 import com.lrepafi.quizgame.utils.XMLScoreFactory;
 
 import android.app.Activity;
@@ -78,7 +80,9 @@ public class QuestionController {
 	}
 	
 	private void saveScore() {
-		//TODO
+		
+		if (this.score == 0) return;
+		
 		XMLScoreFactory s = new XMLScoreFactory();
 		ArrayList<Score>scores = s.load(caller.getFileInputStream());
 		int index=0;
@@ -86,8 +90,16 @@ public class QuestionController {
 			if (scores.get(i).getScore()>=this.score) index=i;
 		}
 		
+		if (index > Globals.MAX_SCORES) return;
+		
 		Score current = new Score(this.settings.getUsername(), this.score);
-		scores.add(index, current);
+		scores.add(++index, current);
+		
+		try {
+			scores.remove(Globals.MAX_SCORES);
+		} catch (Exception e) {
+			//It doesn't matter
+		}
 		
 		s.save(caller.getFileOutputStream(), scores);
 		
@@ -228,7 +240,7 @@ public class QuestionController {
 			
 		}*/
 		
-		 DataBaseHelper myDbHelper = new DataBaseHelper(caller);
+		 DataBaseHelper myDbHelper = new DataBaseHelper((Context)caller);
 		 
 	        try {
 	 
@@ -251,7 +263,7 @@ public class QuestionController {
 	 
 	 	}
 	 	
-	 	SQLiteDatabase db = myDbHelper.getReadableDatabase();
+	 	//SQLiteDatabase db = myDbHelper.getReadableDatabase();
 
 	 	
 			//Cursor c = db.rawQuery("select * from questions",null);
@@ -270,6 +282,9 @@ public class QuestionController {
 
 				Question q = new Question();
 				q.setSubject(c.getString(subjectCol));
+				
+				if (!(Helpers.isPreferredPreference(settings.getPreferences(), q.getSubject()))) continue;
+				
 				q.setQuestionText(c.getString(questionTextCol));
 				q.setAnswers(new String[]{
 						c.getString(answer1Col),
@@ -284,75 +299,8 @@ public class QuestionController {
 
 			}
 			
-			
-			db.close();
-
-
-		
-		/*Question question = new Question();
-		question.setSubject("Literature");
-		question.setQuestionText("Who wrote the Dunwich Horror?");
-		question.setAnswers(new String[]{
-				"August Derleth",
-				"Howard Phillips Lovecraft",
-				"Edgard Allan Poe",
-		"Clark Ashton Smith"}
-		);
-		question.setRightAnswer(2);
-		question.setHelp(3);
-		list.add(question);
-
-		question = new Question();
-		question.setSubject("Sports");
-		question.setQuestionText("Whos is the current 100 meters men's world record holder?");
-		question.setAnswers(new String[]{
-				"Usain Bolt",
-				"Tyson Gay",
-				"Asafa Powell",
-		"Nesta Carter"}
-		);
-		question.setRightAnswer(1);
-		question.setHelp(4);
-		list.add(question);
-
-		question = new Question();
-		question.setSubject("History");
-		question.setQuestionText("The name of which city was changed to Petrograd and Leningrad?");
-		question.setAnswers(new String[]{
-				"Moscow",
-				"Tashkent",
-				"Kiev",
-		"St. Petersburg"}
-		);
-		question.setRightAnswer(4);
-		question.setHelp(1);
-		list.add(question);
-
-		question = new Question();
-		question.setSubject("Science");
-		question.setQuestionText("What is the meaning of elephant in Latin?");
-		question.setAnswers(new String[]{
-				"Long pole",
-				"Huge arch",
-				"Palm tree",
-		"Mountain"}
-		);
-		question.setRightAnswer(2);
-		question.setHelp(1);
-		list.add(question);
-
-		question = new Question();
-		question.setSubject("Movies");
-		question.setQuestionText("For which film did Audrey Hepburn get Academy Award for Best Actress?");
-		question.setAnswers(new String[]{
-				"Roman Holiday",
-				"Wait Until Dark",
-				"Sabrina",
-		"Funny Face"}
-		);
-		question.setRightAnswer(1);
-		question.setHelp(2); //2-1-4-2-1
-		list.add(question);*/
+			myDbHelper.close();
+			//db.close();
 
 	}
 

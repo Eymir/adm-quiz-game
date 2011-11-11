@@ -154,10 +154,8 @@ public class SettingsActivity extends Activity {
 			}
 		});
 		
+		if (settingCtrl.isPreferencesSetted()) this.updatePreferenceText();
 		
-
-		//registerForContextMenu(btnPrefs);
-
 	}
 
 	private void updatePreferenceText() {

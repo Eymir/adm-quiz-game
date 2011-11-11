@@ -58,6 +58,18 @@ public class SettingController {
 		 */
 	}
 
+	public boolean isPreferencesSetted() {
+		
+		for(int i=0;i<settings.getPreferences().size();i++) {
+			
+			if (settings.getPreferences().get(i).getValue()) return true;
+
+		}
+		
+		return false;
+		
+	}
+	
 	public void load(SharedPreferences prefs) {
 		
 		
