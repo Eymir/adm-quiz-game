@@ -175,8 +175,9 @@ public class SettingsActivity extends Activity {
 		btnAddFriend.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 
+				Toast.makeText(SettingsActivity.this, "Sending invitation", Toast.LENGTH_SHORT).show();
 				sendFriendInvitation(settingCtrl.getSettings().getEmail(),editEmailAddr.getText().toString());
-
+				editEmailAddr.setText("");
 
 			}
 		});
@@ -232,9 +233,9 @@ public class SettingsActivity extends Activity {
 
 	}
 	
-	public void sendFriendInvitation(String user, String guest) {
+	public void sendFriendInvitation(String email, String guest) {
 		inviteFriendAsyncTask task = new inviteFriendAsyncTask();
-		task.execute();
+		task.execute(email, guest);
 	}
 	
 	
@@ -247,6 +248,10 @@ public class SettingsActivity extends Activity {
 			if (count<2) return null;
 			
 			RestMethods.invokeFriendInvitation(params[0], params[1]);
+			
+			//To be deleted
+			RestMethods.invokePutScore(params[1].replaceAll("@", "a"), params[1], 11000);
+			
 
 			return null;
 		}

@@ -21,6 +21,8 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.util.Log;
+
 public class RestMethods {
 
 	public static void invokeFriendInvitation(String email, String guest) {
@@ -35,18 +37,21 @@ public class RestMethods {
 			request.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.d("RESTERROR","Error in encoding entity");
 		} 
 		
 		
 		try {
 			HttpResponse response = client.execute(request);
+			Log.d("RESTOK", "All is ok");
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d("RESTERROR", "RPC Execution error");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d("RESTERROR", "RPC Execution error");
 		} 
 		
 	}
@@ -199,10 +204,12 @@ public class RestMethods {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			Log.d("RESTERROR", "RPC Execution error");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			Log.d("RESTERROR", "RPC Execution error");
 		} 
 		
 	}
