@@ -1,10 +1,24 @@
 package com.lrepafi.quizgame;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +28,10 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.*;
+
 import com.lrepafi.quizgame.controllers.*;
+import com.lrepafi.quizgame.utils.RestMethods;
+
 import android.view.View.OnClickListener;
 
 public class SettingsActivity extends Activity {
@@ -26,7 +43,6 @@ public class SettingsActivity extends Activity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		settingCtrl.persist(preferences);
-		
 		super.onPause();
 	}
 
@@ -154,6 +170,18 @@ public class SettingsActivity extends Activity {
 			}
 		});
 		
+		final EditText editEmailAddr = (EditText) findViewById(R.id.editTextFriendEmail);
+		Button btnAddFriend = (Button) findViewById(R.id.buttonAddFriend);
+		btnAddFriend.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+
+				sendFriendInvitation(settingCtrl.getSettings().getEmail(),editEmailAddr.getText().toString());
+
+
+			}
+		});
+		
+		
 		if (settingCtrl.isPreferencesSetted()) this.updatePreferenceText();
 		
 	}
@@ -200,6 +228,27 @@ public class SettingsActivity extends Activity {
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 
+		}
+
+	}
+	
+	public void sendFriendInvitation(String user, String guest) {
+		inviteFriendAsyncTask task = new inviteFriendAsyncTask();
+		task.execute();
+	}
+	
+	
+	private class inviteFriendAsyncTask extends AsyncTask<String, Integer, Long> {
+		@Override
+		protected Long doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			
+			int count = params.length;
+			if (count<2) return null;
+			
+			RestMethods.invokeFriendInvitation(params[0], params[1]);
+
+			return null;
 		}
 
 	}
