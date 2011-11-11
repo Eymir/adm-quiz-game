@@ -170,7 +170,13 @@ public class QuestionActivity extends Activity {
 
 		if (q == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("We finished this game, your score is "+qController.getScore()+"!")
+			
+			String outMsg;
+			if (qController.getQuestionNumber()==0) outMsg = "I'm sorry, I don't have questions for you!Maybe you haven't setted your preferences";
+			else outMsg = "We finished this game, your score is "+qController.getScore()+"!";
+			
+			
+			builder.setMessage(outMsg)
 			.setCancelable(false)
 			.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
