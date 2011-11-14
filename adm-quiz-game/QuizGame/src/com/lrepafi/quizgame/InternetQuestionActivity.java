@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -32,16 +33,16 @@ import com.lrepafi.quizgame.controllers.*;
 import com.lrepafi.quizgame.entities.*;
 import com.lrepafi.quizgame.utils.RestMethodsHandler;
 
-public class QuestionActivity extends Activity {
+public class InternetQuestionActivity extends Activity {
 
 	public static String PREFERENCES = "QuizGamePreferences"; 
 	public static String PREFERENCES_TIME = "Time"; 
 	public static String PREFERENCES_QUESTION_NO = "QuestionNo";
 	public static String PREFERENCES_QUESTION_SCORE = "QuestionScore";
 	private SharedPreferences preferences = null;
-		
-	
-	QuestionController qController = new QuestionController(this);
+	private ProgressDialog dialog = null;
+
+	InternetQuestionController qController = new InternetQuestionController(this);
 	//Button btnPlay = (Button) findViewById(R.id.btnPlay);
 	Button[] answerBtn = new Button[4];
 	TextView questionText = null;
@@ -59,16 +60,16 @@ public class QuestionActivity extends Activity {
 		Editor editor = preferences.edit();
 		editor.putInt(PREFERENCES_QUESTION_SCORE, qController.getScore());
 		editor.putInt(PREFERENCES_TIME, time);
-		
+
 		if (qController.getQuestionNumber() > 0) editor.putInt(PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
 		else editor.putInt(PREFERENCES_QUESTION_NO, 0);
-		
-		
+
+
 		editor.commit();
-		
+
 		super.onPause();
 	}
-		
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,12 +78,24 @@ public class QuestionActivity extends Activity {
 		setContentView(R.layout.question);
 
 		preferences = 
-		      getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+			getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
 		time = preferences.getInt(PREFERENCES_TIME, 10*TOTAL_TIME);
 		qController.setQ(preferences.getInt(PREFERENCES_QUESTION_NO, 0));
 		qController.setScore(preferences.getInt(PREFERENCES_QUESTION_SCORE, 0));
-		qController.init(preferences);
+
+		//Internet operations: i have to start a new game and obtain the nr of questions
+		//TODO asynctask
+		
+		NewGameAsyncTask task = new NewGameAsyncTask();
+		task.execute();
+		
+		
+		/*RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
+		int no = rmh.invokeNewGame(qController.getSettings().getEmail());
+		qController.setTotQuestions(no);
+		Toast.makeText(this, "Hi!This game has "+no+" questions!", Toast.LENGTH_SHORT).show();
+*/
 		
 		//Binding button/variables
 		questionText = (TextView) findViewById(R.id.textViewQuestion);
@@ -166,18 +179,29 @@ public class QuestionActivity extends Activity {
 
 	private void loadQuestion() {
 
-		for (int k=0;k<answerBtn.length;k++) answerBtn[k].setTextColor(QuestionActivity.this.getResources().getColor(R.color.questions_items));
+		for (int k=0;k<answerBtn.length;k++) answerBtn[k].setTextColor(InternetQuestionActivity.this.getResources().getColor(R.color.questions_items));
 
-		Question q = qController.getNextQuestion();
+		//TODO this instruction must be under asynctask
+		if (!(qController.getNextQuestion())) loadQuestion(null);
+		else {
+			
+			dialog = ProgressDialog.show(InternetQuestionActivity.this, "", 
+                    "Loading. Please wait...", true);
+			GetQuestionAsyncTask task = new GetQuestionAsyncTask();
+			task.execute();
+			
+		}
+	}
+	private void loadQuestion(Question q) {
 
 		if (q == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			
+
 			String outMsg;
 			if (qController.getQuestionNumber()==0) outMsg = "I'm sorry, I don't have questions for you!Maybe you haven't setted your preferences";
 			else outMsg = "We finished this game, your score is "+qController.getScore()+"!";
-			
-			
+
+
 			builder.setMessage(outMsg)
 			.setCancelable(false)
 			.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
@@ -186,7 +210,7 @@ public class QuestionActivity extends Activity {
 					time=10*TOTAL_TIME;
 					qController.setQ(0);
 					qController.setScore(0);
-					QuestionActivity.this.finish();
+					InternetQuestionActivity.this.finish();
 
 
 				}
@@ -194,6 +218,9 @@ public class QuestionActivity extends Activity {
 
 			AlertDialog alert = builder.create();
 			alert.show();
+			
+			FinalizeAsyncTask task = new FinalizeAsyncTask();
+			task.execute();
 		}
 		else {
 
@@ -328,34 +355,108 @@ public class QuestionActivity extends Activity {
 			return;
 		}
 	}
+
+	private class NewGameAsyncTask extends AsyncTask<Void, Integer, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
+			int no = rmh.invokeNewGame(qController.getSettings().getEmail());
+			publishProgress(no);
+
+
+			return null;
+		}
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			// TODO Auto-generated method stub
+
+			try {
+				qController.setTotQuestions(values[0]);
+				Toast.makeText(InternetQuestionActivity.this, "Hi!This game has "+values[0]+" questions!", Toast.LENGTH_SHORT).show();
+			}
+			catch (Exception e) {
+				Log.d("QUIZGAME", "Timeout screen in AsyncTask: "+e.getMessage());
+			}
+
+
+			return;
+		}
+	}
 	
+	private class GetQuestionAsyncTask extends AsyncTask<Void, Question, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
+			Question q = rmh.invokeGetQuestion(qController.getSettings().getEmail(), qController.getQuestionNumber());
+			publishProgress(q);
+
+
+			return null;
+		}
+		@Override
+		protected void onProgressUpdate(Question... values) {
+			// TODO Auto-generated method stub
+
+			try {
+				dialog.dismiss();
+				loadQuestion(values[0]);
+			}
+			catch (Exception e) {
+				Log.d("QUIZGAME", "Timeout screen in AsyncTask: "+e.getMessage());
+			}
+
+
+			return;
+		}
+	}
+	
+	private class FinalizeAsyncTask extends AsyncTask<String, Integer, Long> {
+		@Override
+		protected Long doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			
+			int count = params.length;
+			if (count<1) return null;
+			
+			RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
+			rmh.invokeEndGame(qController.getSettings().getEmail());
+			
+			return null;
+		}
+
+	}
+
+
+
 	public FileInputStream getFileInputStream() {
 
-	FileInputStream fin=null;
-	try {
-		fin = openFileInput("scores.xml");
-	} catch (FileNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		FileInputStream fin=null;
+		try {
+			fin = openFileInput("scores.xml");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return fin;
+
 	}
 
-	return fin;
-	
-	}
-	
 	public FileOutputStream getFileOutputStream() {
 		FileOutputStream fos=null;
 		try {
 			fos = openFileOutput("scores.xml",  
-			        Context.MODE_PRIVATE);
+					Context.MODE_PRIVATE);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
+
 		return fos;
 	}
-	
+
 }
 
 

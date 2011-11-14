@@ -30,7 +30,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.*;
 
 import com.lrepafi.quizgame.controllers.*;
-import com.lrepafi.quizgame.utils.RestMethods;
+import com.lrepafi.quizgame.utils.RestMethodsHandler;
 
 import android.view.View.OnClickListener;
 
@@ -247,12 +247,13 @@ public class SettingsActivity extends Activity {
 			int count = params.length;
 			if (count<2) return null;
 			
-			RestMethods.invokeFriendInvitation(params[0], params[1]);
+			RestMethodsHandler rmh = new RestMethodsHandler(settingCtrl.getSettings().getServerName());
+			
+			rmh.invokeFriendInvitation(params[0], params[1]);
 			
 			//To be deleted
-			RestMethods.invokePutScore(params[1].replaceAll("@", "a"), params[1], 11000);
+			rmh.invokePutScore(params[1].replaceAll("@", "a"), params[1], 11000);
 			
-
 			return null;
 		}
 
