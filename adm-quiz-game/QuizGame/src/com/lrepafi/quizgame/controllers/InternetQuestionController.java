@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
 
+import com.lrepafi.quizgame.InternetQuestionActivity;
 import com.lrepafi.quizgame.QuestionActivity;
 import com.lrepafi.quizgame.R;
 import com.lrepafi.quizgame.entities.*;
@@ -28,7 +29,7 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import android.widget.Toast;
 
-public class QuestionController {
+public class InternetQuestionController {
 
 	private static final String DB_NAME = "supertrivialgame";
 	private static final String DB_PATH = "/data/data/com.lrepafi.quizgame/";
@@ -44,8 +45,8 @@ public class QuestionController {
 		return settings;
 	}
 	
-	private QuestionActivity caller;
-	public QuestionController(QuestionActivity caller) {
+	private InternetQuestionActivity caller;
+	public InternetQuestionController(InternetQuestionActivity caller) {
 		this.caller=caller;
 	}
 	
@@ -308,13 +309,28 @@ public class QuestionController {
 
 	}
 
-	public Question getNextQuestion() {
+	private int tot;
+	public void setTotQuestions(int tot) {
+		this.tot = tot;
+	}
+	
+	public boolean getNextQuestion() {
 
-		if (q < list.size()) return list.get(q++);
+		/*if (q < list.size()) return list.get(q++);
 		else {
 			saveScore();
 			return null;
+		}*/
+		
+		if (q< tot) {
+			
+			return true;
 		}
+		else {
+			saveScore();
+			return false;
+		}
+
 
 	}
 

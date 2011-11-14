@@ -1,7 +1,12 @@
 package com.lrepafi.quizgame;
 
+import com.lrepafi.quizgame.utils.RestMethodsHandler;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainMenuActivity extends Activity {
 
@@ -79,10 +85,28 @@ public class MainMenuActivity extends Activity {
 
 	}
 
+	private boolean isOnline() {
+	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
+	
 	private void showPlay() {
 
-		Intent i = new Intent(this, QuestionActivity.class);
+		Intent i = null;
+		if(!isOnline())	i = new Intent(this, QuestionActivity.class);
+		else i = new Intent(this, InternetQuestionActivity.class );
 		startActivity(i);
+		
+		/*qController.init(preferences);
+		else {
+			
+
+			internet=true;
+		}*/
 
 	}
 

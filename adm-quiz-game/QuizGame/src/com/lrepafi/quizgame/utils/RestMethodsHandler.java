@@ -20,27 +20,80 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.lrepafi.quizgame.entities.Question;
 
 import android.util.Log;
 
-public class RestMethods {
+public class RestMethodsHandler {
 
-	public static void invokeFriendInvitation(String email, String guest) {
+	private String basePath=null;
+
+	public RestMethodsHandler(String basePath) {
+		this.basePath=basePath;
+	}
+
+	/*
+	 * This methods receive a response and returns the string
+	 */
+	private String getResponse(HttpResponse response) {
+
+		HttpEntity entity = response.getEntity(); 
+		String responseString = "";
+		if (entity != null) { 
+			InputStream stream = null;
+			try {
+				stream = entity.getContent();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			BufferedReader reader = new BufferedReader( 
+					new InputStreamReader(stream)); 
+			StringBuilder sb = new StringBuilder(); 
+			String line = null; 
+			try {
+				while ((line = reader.readLine()) != null) { 
+					sb.append(line + "\n"); 
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+			try {
+				stream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			responseString = sb.toString(); 
+		}
+		return responseString;
+	}
+
+	public void invokeFriendInvitation(String email, String guest) {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost request = new HttpPost("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/friends"); 
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
 		pairs.add(new BasicNameValuePair("friend_address", guest));
-		
-		
+
+
 		try {
 			request.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			Log.d("RESTERROR","Error in encoding entity");
 		} 
-		
-		
+
+
 		try {
 			HttpResponse response = client.execute(request);
 			Log.d("RESTOK", "All is ok");
@@ -53,17 +106,17 @@ public class RestMethods {
 			e.printStackTrace();
 			Log.d("RESTERROR", "RPC Execution error");
 		} 
-		
+
 	}
-	
-	public static void invokeGetScores(String email) {
+
+	public void invokeGetScores(String email) {
 		HttpClient client = new DefaultHttpClient();
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
 		HttpGet request = new HttpGet("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/highscores?" + URLEncodedUtils.format(pairs, "utf-8"));
-		
+
 		HttpResponse response=null;
-		
+
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
@@ -73,65 +126,38 @@ public class RestMethods {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
-		HttpEntity entity = response.getEntity(); 
-		if (entity != null) { 
-		  InputStream stream = null;
-		try {
-			stream = entity.getContent();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		  BufferedReader reader = new BufferedReader( 
-		                                new InputStreamReader(stream)); 
-		  StringBuilder sb = new StringBuilder(); 
-		  String line = null; 
-		  try {
-			while ((line = reader.readLine()) != null) { 
-			    sb.append(line + "\n"); 
-			  }
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} 
-		  try {
-			stream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		  String responseString = sb.toString(); 
-		} 
 
-		
+		this.getResponse(response);
+
+
 		//TODO implementar json y exception handling(now sucks :))
 		//        :(_8^(|)
-		
-		
+
+
 	}
-	
-	public static void invokeNewGame(String email) {
+
+	/*
+	 * This method invokes a new game and receives the nr of question of the game
+	 */
+	public int invokeNewGame(String email) {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost request = new HttpPost("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/questions"); 
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
 
-		
-		
+
+
 		try {
 			request.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
-		
+
+
+		HttpResponse response=null;
 		try {
-			HttpResponse response = client.execute(request);
+			response = client.execute(request);
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,23 +165,23 @@ public class RestMethods {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+
+		String risp = this.getResponse(response);
 		
-		
-		//TODO devolverà nr de cuestiones disponibles en texto plano
-		//hacer lo mismo que en invokeGetScores por leer el buffer
-		//y un Integer.getInt or smth 
+		return Integer.parseInt(risp);
+
 	}
-	
-	public static void invokeGetQuestion(String email, int question) {
-		
+
+	public Question invokeGetQuestion(String email, int question) {
+
 		HttpClient client = new DefaultHttpClient();
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
 		pairs.add(new BasicNameValuePair("question", String.valueOf(question)));
 		HttpGet request = new HttpGet("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/questions?" + URLEncodedUtils.format(pairs, "utf-8"));
-		
+
 		HttpResponse response=null;
-		
+
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
@@ -165,18 +191,30 @@ public class RestMethods {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
-		//TODO implementar json y exception handling(now sucks :))
+
+		String responseString = this.getResponse(response);
+		GsonBuilder builder = new GsonBuilder(); 
+		Gson gson = builder.create(); 
+		JSONObject json=null;
+		try {
+			json = new JSONObject(responseString);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		Question q = gson.fromJson(json.toString(), Question.class);
+
+		return q;
 	}
-	
-	public static void invokeEndGame(String email) {
+
+	public void invokeEndGame(String email) {
 		HttpClient client = new DefaultHttpClient();
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
 		HttpDelete request = new HttpDelete("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/questions?" + URLEncodedUtils.format(pairs, "utf-8"));
-		
+
 		HttpResponse response=null;
-		
+
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
@@ -186,20 +224,20 @@ public class RestMethods {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
+
 	}
-	
-	public static void invokePutScore(String user, String email, int score) {
-		
+
+	public void invokePutScore(String user, String email, int score) {
+
 		HttpClient client = new DefaultHttpClient();
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email",email));
 		pairs.add(new BasicNameValuePair("username", user));
 		pairs.add(new BasicNameValuePair("score", String.valueOf(score)));
 		HttpPut request = new HttpPut("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/highscores?" + URLEncodedUtils.format(pairs, "utf-8"));
-		
+
 		HttpResponse response=null;
-		
+
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
@@ -211,6 +249,6 @@ public class RestMethods {
 			//e.printStackTrace();
 			Log.d("RESTERROR", "RPC Execution error");
 		} 
-		
+
 	}
 }
