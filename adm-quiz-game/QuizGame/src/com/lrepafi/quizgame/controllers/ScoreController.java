@@ -10,7 +10,7 @@ import com.lrepafi.quizgame.utils.XMLScoreFactory;
 
 public class ScoreController {
 
-	ArrayList<Score> scores = new ArrayList<Score>();
+	ArrayList<LocalScore> scores = new ArrayList<LocalScore>();
 
 	//FIXME The code below has to be removed until method load and persist are implemented
 
@@ -38,11 +38,11 @@ ScoresScreen.this.setProgressBarIndeterminateVisibility(true);
 
 		}
 		else {
-			scores.add(new Score("netlopa",61000));
-			scores.add(new Score("razz",49400));
-			scores.add(new Score("billy",44200));
+			scores.add(new LocalScore("netlopa",61000));
+			scores.add(new LocalScore("razz",49400));
+			scores.add(new LocalScore("billy",44200));
 			for (int i=0, cscore=44000;i<=20;i++) {
-				scores.add(new Score("remote"+i,cscore));
+				scores.add(new LocalScore("remote"+i,cscore));
 				cscore-=1000;				
 			}
 		}
@@ -55,11 +55,11 @@ ScoresScreen.this.setProgressBarIndeterminateVisibility(true);
 
 	}
 
-	public ArrayList<Score> getScores() {
+	public ArrayList<LocalScore> getScores() {
 		return scores;
 	}
 
-	public void setScores(ArrayList<Score> scores) {
+	public void setScores(ArrayList<LocalScore> scores) {
 		this.scores = scores;
 	}
 
@@ -85,7 +85,7 @@ ScoresScreen.this.setProgressBarIndeterminateVisibility(true);
 	}
 
 	public void deleteAll() {
-		scores = new ArrayList<Score>();
+		scores = new ArrayList<LocalScore>();
 		//persist();
 	}
 

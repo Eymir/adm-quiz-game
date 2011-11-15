@@ -15,7 +15,7 @@ import org.xmlpull.v1.XmlSerializer;
 import android.content.Context;
 import android.util.Xml;
 
-import com.lrepafi.quizgame.entities.Score;
+import com.lrepafi.quizgame.entities.LocalScore;
 
 public class XMLScoreFactory {
 
@@ -27,7 +27,7 @@ public class XMLScoreFactory {
 	private static final String XML_SCORE_SCORE = "value";
 	private static final String XML_SCORE_RANKING = "rank";
 
-	public void save(FileOutputStream fos, ArrayList<Score> scores) {
+	public void save(FileOutputStream fos, ArrayList<LocalScore> scores) {
 		XmlSerializer serialiser = Xml.newSerializer();
 		StringWriter writer = new StringWriter(); 
 		 
@@ -64,10 +64,10 @@ public class XMLScoreFactory {
 		
 	}
 	
-	public ArrayList<Score> load(FileInputStream inputStream) {
+	public ArrayList<LocalScore> load(FileInputStream inputStream) {
 		
 		//FileInputStream inputStream = inputStream = openFileInput("contacts.xml");
-		ArrayList<Score> scores = new ArrayList<Score>(); 
+		ArrayList<LocalScore> scores = new ArrayList<LocalScore>(); 
 		
 		XmlPullParser parser = null;
 		try {
@@ -90,7 +90,7 @@ public class XMLScoreFactory {
 		    String score = parser.getAttributeValue(null, XML_SCORE_SCORE); 
 		    
 		    try {
-		    Score tmp = new Score(uname, Integer.parseInt(score));
+		    LocalScore tmp = new LocalScore(uname, Integer.parseInt(score));
 		    scores.add(tmp);
 		    }
 		    catch (Exception e) {
