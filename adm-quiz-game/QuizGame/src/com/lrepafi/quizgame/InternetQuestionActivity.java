@@ -41,6 +41,7 @@ public class InternetQuestionActivity extends Activity {
 	public static String PREFERENCES_QUESTION_SCORE = "QuestionScore";
 	private SharedPreferences preferences = null;
 	private ProgressDialog dialog = null;
+	private boolean finalizedQuestionExecution=false;
 
 	InternetQuestionController qController = new InternetQuestionController(this);
 	//Button btnPlay = (Button) findViewById(R.id.btnPlay);
@@ -89,6 +90,9 @@ public class InternetQuestionActivity extends Activity {
 		
 		NewGameAsyncTask task = new NewGameAsyncTask();
 		task.execute();
+		this.finalizedQuestionExecution=false;
+		TimeoutAsyncTask task2 = new TimeoutAsyncTask();
+		task2.execute();
 		
 		
 		/*RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
@@ -372,6 +376,7 @@ public class InternetQuestionActivity extends Activity {
 			// TODO Auto-generated method stub
 
 			try {
+				finalizedQuestionExecution=true;
 				qController.setTotQuestions(values[0]);
 				Toast.makeText(InternetQuestionActivity.this, "Hi!This game has "+values[0]+" questions!", Toast.LENGTH_SHORT).show();
 			}
@@ -454,10 +459,41 @@ public class InternetQuestionActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-
+		
 		return fos;
 	}
 
+	private class TimeoutAsyncTask extends AsyncTask<Void, Integer, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+
+
+			return null;
+		}
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			// TODO Auto-generated method stub
+			if (finalizedQuestionExecution) return;
+			
+			try {
+				InternetQuestionActivity.this.finalize();
+				Toast.makeText(InternetQuestionActivity.this, "Sorry!There was a problem in the internet connection!", Toast.LENGTH_SHORT);
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return;
+		}
+	}
 }
 
 
