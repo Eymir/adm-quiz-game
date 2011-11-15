@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lrepafi.quizgame.entities.HighScoreList;
 import com.lrepafi.quizgame.entities.Question;
 
 import android.util.Log;
@@ -109,7 +110,7 @@ public class RestMethodsHandler {
 
 	}
 
-	public void invokeGetScores(String email) {
+	public HighScoreList invokeGetScores(String email) {
 		HttpClient client = new DefaultHttpClient();
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
@@ -127,13 +128,24 @@ public class RestMethodsHandler {
 			e.printStackTrace();
 		} 
 
-		this.getResponse(response);
+		String responseString = this.getResponse(response);
 
 
 		//TODO implementar json y exception handling(now sucks :))
 		//        :(_8^(|)
 
+		GsonBuilder builder = new GsonBuilder(); 
+		Gson gson = builder.create(); 
+		JSONObject json=null;
+		try {
+			json = new JSONObject(responseString);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		HighScoreList ret = gson.fromJson(json.toString(), HighScoreList.class);
 
+		return ret;
 	}
 
 	/*

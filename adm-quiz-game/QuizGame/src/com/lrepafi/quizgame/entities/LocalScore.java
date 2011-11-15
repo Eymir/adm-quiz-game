@@ -1,11 +1,11 @@
 package com.lrepafi.quizgame.entities;
 
-public class Score {
+public class LocalScore {
 
 	private String username;
 	private int score;
 
-	public Score(String username, int score) {
+	public LocalScore(String username, int score) {
 		this.username=username;
 		this.score=score;
 	}

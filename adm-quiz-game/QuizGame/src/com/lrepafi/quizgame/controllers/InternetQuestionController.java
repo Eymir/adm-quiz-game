@@ -89,7 +89,7 @@ public class InternetQuestionController {
 		if (this.score == 0) return;
 		
 		XMLScoreFactory s = new XMLScoreFactory();
-		ArrayList<Score>scores = s.load(caller.getFileInputStream());
+		ArrayList<LocalScore>scores = s.load(caller.getFileInputStream());
 		int index=0;
 		for(int i=0;i<scores.size();i++) {
 			if (scores.get(i).getScore()>=this.score) index=i;
@@ -97,7 +97,7 @@ public class InternetQuestionController {
 		
 		if (index > Globals.MAX_SCORES) return;
 		
-		Score current = new Score(this.settings.getUsername(), this.score);
+		LocalScore current = new LocalScore(this.settings.getUsername(), this.score);
 		scores.add(++index, current);
 		
 		try {
@@ -308,6 +308,10 @@ public class InternetQuestionController {
 			//db.close();
 
 	}
+	
+	public void addQuestion(Question q) {
+		list.add(q);
+	}
 
 	private int tot;
 	public void setTotQuestions(int tot) {
@@ -323,7 +327,7 @@ public class InternetQuestionController {
 		}*/
 		
 		if (q< tot) {
-			
+			q++;
 			return true;
 		}
 		else {

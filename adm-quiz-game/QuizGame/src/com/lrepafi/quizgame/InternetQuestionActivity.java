@@ -401,6 +401,7 @@ public class InternetQuestionActivity extends Activity {
 
 			try {
 				dialog.dismiss();
+				qController.addQuestion(values[0]);
 				loadQuestion(values[0]);
 			}
 			catch (Exception e) {

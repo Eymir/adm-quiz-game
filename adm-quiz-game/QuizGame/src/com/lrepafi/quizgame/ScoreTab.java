@@ -1,7 +1,7 @@
 package com.lrepafi.quizgame;
 
 import com.lrepafi.quizgame.controllers.ScoreController;
-import com.lrepafi.quizgame.entities.Score;
+import com.lrepafi.quizgame.entities.LocalScore;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -70,7 +70,7 @@ public class ScoreTab extends Activity {
 		return new ScoreController(false);
 	}
 
-	protected void addScore(Context c, TableLayout table, Score s, int ranking) {
+	protected void addScore(Context c, TableLayout table, LocalScore s, int ranking) {
 
 		TableRow row = new TableRow(c);
 		TextView tv = new TextView(c);
