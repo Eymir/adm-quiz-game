@@ -9,7 +9,7 @@ import com.lrepafi.quizgame.utils.Globals;
 public class SettingController {
 
 	private Settings settings = new Settings();
-	
+
 	public Settings getSettings() {
 		return settings;
 	}
@@ -21,51 +21,51 @@ public class SettingController {
 	}
 
 	public void persist(SharedPreferences prefs) {
-		
-		
+
+
 		Editor editor = prefs.edit();
 		editor.putString(Globals.PREFERENCES_USER_NAME, settings.getUsername());
 		editor.putString(Globals.PREFERENCES_EMAIL, settings.getEmail());
 		editor.putString(Globals.PREFERENCES_SERVER_NAME, settings.getServerName());
-		
+
 		for(int i=0;i<settings.getPreferences().size();i++) {
-			
+
 			editor.putBoolean(Globals.PREFERENCES_CATEGORY_PREFIX+settings.getPreferences().get(i).getPref(), 
 					(settings.getPreferences().get(i).getValue()));
-			
+
 		}
-		
+
 		editor.commit();
 
 	}
 
 	public boolean isPreferencesSetted() {
-		
+
 		for(int i=0;i<settings.getPreferences().size();i++) {
-			
+
 			if (settings.getPreferences().get(i).getValue()) return true;
 
 		}
-		
+
 		return false;
-		
+
 	}
-	
+
 	public void load(SharedPreferences prefs) {
-		
-		
+
+
 		settings.setUsername(prefs.getString(Globals.PREFERENCES_USER_NAME, ""));
 		settings.setEmail(prefs.getString(Globals.PREFERENCES_EMAIL, ""));
 		settings.setServerName(prefs.getString(Globals.PREFERENCES_SERVER_NAME, ""));
-		
+
 		for(int i=0;i<settings.getPreferences().size();i++) {
-			
+
 			settings.getPreferences().get(i).setValue(prefs.getBoolean
 					(Globals.PREFERENCES_CATEGORY_PREFIX+settings.getPreferences().get(i).getPref(),
 							false));
 
 		}		
-		
+
 	}
 
 	public String[] getPrefsKeys() {

@@ -21,89 +21,87 @@
 			android:layout_marginLeft="10dip"></ImageView>
 	</RelativeLayout>
 
-	<ScrollView android:id="@+id/ScrollView01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+	<ScrollView android:id="@+id/ScrollView01"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		xmlns:android="http://schemas.android.com/apk/res/android">
 
-<LinearLayout
-	android:id="@+id/LinearLayoutSubScroll01"
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent" 
-    android:orientation="vertical" 
-    android:scrollbars="vertical"
-    >
+		<LinearLayout android:id="@+id/LinearLayoutSubScroll01"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:orientation="vertical" android:scrollbars="vertical">
 
 
 
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_width="wrap_content" android:id="@+id/textView1"
-		android:layout_centerHorizontal="true" android:text="Username"
-		android:textColor="@android:color/black"
-		android:layout_centerVertical="true" android:textStyle="bold"
-		android:gravity="center" android:layout_marginTop="10dip"></TextView>
-	<EditText android:layout_height="wrap_content" android:id="@+id/editTextUsername"
-		android:layout_width="match_parent">
-		<requestFocus></requestFocus>
-	</EditText>
+			<TextView android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content" android:id="@+id/textView1"
+				android:layout_centerHorizontal="true" android:text="Username"
+				android:textColor="@android:color/black"
+				android:layout_centerVertical="true" android:textStyle="bold"
+				android:gravity="center" android:layout_marginTop="10dip"></TextView>
+			<EditText android:layout_height="wrap_content" android:id="@+id/editTextUsername"
+				android:layout_width="match_parent">
+				<requestFocus></requestFocus>
+			</EditText>
 
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_width="wrap_content" android:id="@+id/textView2"
-		android:layout_centerHorizontal="true" android:text="Email"
-		android:textColor="@android:color/black"
-		android:layout_centerVertical="true" android:textStyle="bold"
-		android:gravity="center" android:layout_marginTop="10dip"></TextView>
+			<TextView android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content" android:id="@+id/textView2"
+				android:layout_centerHorizontal="true" android:text="Email"
+				android:textColor="@android:color/black"
+				android:layout_centerVertical="true" android:textStyle="bold"
+				android:gravity="center" android:layout_marginTop="10dip"></TextView>
 
-	<EditText android:layout_height="wrap_content" android:id="@+id/editTextEmail"
-		android:layout_width="match_parent" android:inputType="textEmailAddress"></EditText>
+			<EditText android:layout_height="wrap_content" android:id="@+id/editTextEmail"
+				android:layout_width="match_parent" android:inputType="textEmailAddress"></EditText>
 
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_width="wrap_content" android:id="@+id/textView3"
-		android:layout_centerHorizontal="true" android:text="Question preferences"
-		android:textColor="@android:color/black"
-		android:layout_centerVertical="true" android:textStyle="bold"
-		android:gravity="center" android:layout_marginTop="10dip"></TextView>
+			<TextView android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content" android:id="@+id/textView3"
+				android:layout_centerHorizontal="true" android:text="Question preferences"
+				android:textColor="@android:color/black"
+				android:layout_centerVertical="true" android:textStyle="bold"
+				android:gravity="center" android:layout_marginTop="10dip"></TextView>
 
-	<LinearLayout android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:id="@+id/linearLayoutPrefs">
-		<Button android:text="Select preferencies" android:id="@+id/buttonSelectPreferences"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-		<TextView android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:layout_width="wrap_content" android:id="@+id/textViewPreferences"
-			android:layout_centerHorizontal="true" android:text="Question preferences are not set"
-			android:textColor="@android:color/black"
-			android:layout_centerVertical="true" android:textStyle="bold"
-			android:gravity="center"></TextView>
-	</LinearLayout>
+			<LinearLayout android:layout_height="wrap_content"
+				android:layout_width="match_parent" android:id="@+id/linearLayoutPrefs">
+				<Button android:text="Select preferencies" android:id="@+id/buttonSelectPreferences"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+				<TextView android:layout_height="wrap_content"
+					android:textAppearance="?android:attr/textAppearanceSmall"
+					android:layout_width="wrap_content" android:id="@+id/textViewPreferences"
+					android:layout_centerHorizontal="true" android:text="Question preferences are not set"
+					android:textColor="@android:color/black"
+					android:layout_centerVertical="true" android:textStyle="bold"
+					android:gravity="center"></TextView>
+			</LinearLayout>
 
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_width="wrap_content" android:id="@+id/textView4"
-		android:layout_centerHorizontal="true" android:text="Question server"
-		android:textColor="@android:color/black"
-		android:layout_centerVertical="true" android:textStyle="bold"
-		android:gravity="center" android:layout_marginTop="10dip"></TextView>
+			<TextView android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content" android:id="@+id/textView4"
+				android:layout_centerHorizontal="true" android:text="Question server"
+				android:textColor="@android:color/black"
+				android:layout_centerVertical="true" android:textStyle="bold"
+				android:gravity="center" android:layout_marginTop="10dip"></TextView>
 
-	<Spinner android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:id="@+id/spinnerServer"
-		android:prompt="@string/server_prompt"></Spinner>
+			<Spinner android:layout_height="wrap_content"
+				android:layout_width="match_parent" android:id="@+id/spinnerServer"
+				android:prompt="@string/server_prompt"></Spinner>
 
-	<TextView android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_width="wrap_content" android:id="@+id/textView5"
-		android:layout_centerHorizontal="true" android:text="Invite friends by email"
-		android:textColor="@android:color/black"
-		android:layout_centerVertical="true" android:textStyle="bold"
-		android:gravity="center" android:layout_marginTop="10dip"></TextView>
+			<TextView android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content" android:id="@+id/textView5"
+				android:layout_centerHorizontal="true" android:text="Invite friends by email"
+				android:textColor="@android:color/black"
+				android:layout_centerVertical="true" android:textStyle="bold"
+				android:gravity="center" android:layout_marginTop="10dip"></TextView>
 
-	<LinearLayout android:layout_height="wrap_content"
-		android:layout_width="match_parent" android:id="@+id/linearLayoutInvite">
-		<Button android:text="Invite" android:id="@+id/buttonAddFriend"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-		<EditText android:layout_height="wrap_content" android:id="@+id/editTextFriendEmail"
-			android:layout_width="match_parent" android:inputType="textEmailAddress"></EditText>
-	</LinearLayout>
-	</LinearLayout>
+			<LinearLayout android:layout_height="wrap_content"
+				android:layout_width="match_parent" android:id="@+id/linearLayoutInvite">
+				<Button android:text="Invite" android:id="@+id/buttonAddFriend"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+				<EditText android:layout_height="wrap_content" android:id="@+id/editTextFriendEmail"
+					android:layout_width="match_parent" android:inputType="textEmailAddress"></EditText>
+			</LinearLayout>
+		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

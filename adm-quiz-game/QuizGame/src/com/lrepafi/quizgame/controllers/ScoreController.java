@@ -8,42 +8,13 @@ import com.lrepafi.quizgame.utils.RestMethodsHandler;
 import com.lrepafi.quizgame.utils.XMLScoreFactory;
 
 public class ScoreController {
-	
-	private boolean todo=true;
 
 	ArrayList<LocalScore> scores = new ArrayList<LocalScore>();
 
 	public ScoreController() {
-		
-	
+
+
 	}
-	
-	/*public ScoreController(boolean server) {
-
-
-		//Local
-		if (!server) {
-
-
-
-		}
-		else {
-			scores.add(new LocalScore("netlopa",61000));
-			scores.add(new LocalScore("razz",49400));
-			scores.add(new LocalScore("billy",44200));
-			for (int i=0, cscore=44000;i<=20;i++) {
-				scores.add(new LocalScore("remote"+i,cscore));
-				cscore-=1000;				
-			}
-		}
-		
-		//FileOutputStream fos = openFileOutput("contacts.xml",  
-          //      Context.MODE_PRIVATE);
-
-		//XMLScoreFactory s = new XMLScoreFactory();
-		//s.save(fos, scores);
-
-	}*/
 
 	public ArrayList<LocalScore> getScores() {
 		return scores;
@@ -63,27 +34,27 @@ public class ScoreController {
 
 		XMLScoreFactory s = new XMLScoreFactory();
 		s.save(fos, scores);
-		
+
 	}
 
 	public void load(String server, String email) {
 
 		RestMethodsHandler rmh = new RestMethodsHandler(server);
 		HighScoreList hsl = rmh.invokeGetScores(email);
-				
+
 		List<HighScore> hslist = hsl.getScores();
 		if (hslist == null) return;
-		
+
 		ArrayList<LocalScore> list = new ArrayList<LocalScore>();
-		
+
 		for (int i=0;i<hslist.size();i++) {
 			list.add(new LocalScore(hslist.get(i).getUsername(), hslist.get(i).getScore()));			
 		}
-				
+
 		scores = list;
-		
+
 	}
-	
+
 	public void deleteAll() {
 		scores = new ArrayList<LocalScore>();
 	}

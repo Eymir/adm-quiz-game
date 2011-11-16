@@ -44,7 +44,7 @@ public class RestMethodsHandler {
 	private String getResponse(HttpResponse response) {
 
 		if (response == null) return "";
-		
+
 		HttpEntity entity = response.getEntity(); 
 		String responseString = "";
 		if (entity != null) { 
@@ -52,10 +52,10 @@ public class RestMethodsHandler {
 			try {
 				stream = entity.getContent();
 			} catch (IllegalStateException e) {
-				
+
 				e.printStackTrace();
 			} catch (IOException e) {
-				
+
 				e.printStackTrace();
 			} 
 			BufferedReader reader = new BufferedReader( 
@@ -67,13 +67,13 @@ public class RestMethodsHandler {
 					sb.append(line + "\n"); 
 				}
 			} catch (IOException e1) {
-				
+
 				e1.printStackTrace();
 			} 
 			try {
 				stream.close();
 			} catch (IOException e) {
-				
+
 				e.printStackTrace();
 			} 
 			responseString = sb.toString(); 
@@ -92,7 +92,7 @@ public class RestMethodsHandler {
 		try {
 			request.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
-			
+
 			Log.d("RESTERROR","Error in encoding entity");
 		} 
 
@@ -101,11 +101,11 @@ public class RestMethodsHandler {
 			client.execute(request);
 			Log.d("RESTOK", "All is ok");
 		} catch (ClientProtocolException e) {
-			
+
 			e.printStackTrace();
 			Log.d("RESTERROR", "RPC Execution error");
 		} catch (IOException e) {
-		
+
 			e.printStackTrace();
 			Log.d("RESTERROR", "RPC Execution error");
 		} 
@@ -119,15 +119,15 @@ public class RestMethodsHandler {
 		HttpGet request = new HttpGet(basePath+"highscores?" + URLEncodedUtils.format(pairs, "utf-8"));
 
 		HttpResponse response=null;
-		
+
 
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
-			
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		} 
 
@@ -139,10 +139,10 @@ public class RestMethodsHandler {
 		try {
 			json = new JSONObject(responseString);
 		} catch (JSONException e) {
-		
+
 			e.printStackTrace();
 		} 
-		
+
 		HighScoreList ret = new HighScoreList();
 		try {
 			ret = gson.fromJson(json.toString(), HighScoreList.class);
@@ -168,7 +168,7 @@ public class RestMethodsHandler {
 		try {
 			request.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
-			
+
 			e.printStackTrace();
 		} 
 
@@ -177,37 +177,37 @@ public class RestMethodsHandler {
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
-			
+
 			e.printStackTrace();
 		} catch (IOException e) {
-		
+
 			e.printStackTrace();
 		} 
 
 		String risp = sanitizeNumberString(this.getResponse(response));
 		int ret = 0;
-		
+
 		try {
 			ret = Integer.parseInt(risp);
 		}
 		catch (Exception e) {
 			ret = 0;
 		}
-		
-		
+
+
 		return ret;
 
 
-		
+
 	}
-	
+
 	private String sanitizeNumberString(String str) {
 		StringBuffer stringBuffer = new StringBuffer();
 		for(int i=0;i<str.length();i++) {
 			if ((str.charAt(i) >= '0') && (str.charAt(i) <= '9')) stringBuffer.append(str.charAt(i));
 			else break;
 		}
-		
+
 		return stringBuffer.toString();
 	}
 
@@ -224,10 +224,10 @@ public class RestMethodsHandler {
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
-		
+
 			e.printStackTrace();
 		} catch (IOException e) {
-		
+
 			e.printStackTrace();
 		} 
 
@@ -238,17 +238,17 @@ public class RestMethodsHandler {
 		try {
 			json = new JSONObject(responseString);
 		} catch (JSONException e) {
-			
+
 			e.printStackTrace();
 		} 
-		
+
 		Question q = null;
 		try {
 
-		q = gson.fromJson(json.toString(), Question.class);
-		
+			q = gson.fromJson(json.toString(), Question.class);
+
 		}
-		
+
 		catch (Exception e) {
 			;
 		}
@@ -265,10 +265,10 @@ public class RestMethodsHandler {
 		try {
 			client.execute(request);
 		} catch (ClientProtocolException e) {
-			
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		} 
 

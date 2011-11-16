@@ -22,64 +22,57 @@ import com.lrepafi.quizgame.utils.RestMethodsHandler;
 
 public class ServerScoreTab extends ScoreTab {
 
-	
+
 	private Dialog dialog;
 	private boolean finalizedQuestionExecution=false;
-	
+
 	private String email;
 	private String servername;
-	
+
 	@Override
 	protected void loadData(ScoreController s) {
-		
+
 		SharedPreferences preferences = 
-		      getSharedPreferences(Globals.PREFERENCES, Context.MODE_PRIVATE);
-		
+			getSharedPreferences(Globals.PREFERENCES, Context.MODE_PRIVATE);
+
 		email = preferences.getString(Globals.PREFERENCES_EMAIL,"");
 		servername = preferences.getString(Globals.PREFERENCES_SERVER_NAME, "");
-		
+
 		dialog = ProgressDialog.show(ServerScoreTab.this, "", 
-                "Loading scores. Please wait...", true);
-		
+				"Loading scores. Please wait...", true);
+
 		GetQuestionAsyncTask task = new GetQuestionAsyncTask();
 		task.execute();
 		TimeoutAsyncTask task2 = new TimeoutAsyncTask();
 		task2.execute();
 	}
-	
-	@Override
-	protected ScoreController getScoreController() {
 
-		//return new ScoreController(true);
-		return new ScoreController();
-	}
-	
 	private class GetQuestionAsyncTask extends AsyncTask<Void, ArrayList<LocalScore>, Void> {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Void doInBackground(Void... params) {
-			
+
 			RestMethodsHandler rmh = new RestMethodsHandler(servername);
 			HighScoreList hsl = rmh.invokeGetScores(email);
 			ArrayList<LocalScore> list = new ArrayList<LocalScore>();
-			
+
 			try {
-			List<HighScore> hslist = hsl.getScores();
-			
-			for (int i=0;i<hslist.size();i++) {
-				list.add(new LocalScore(hslist.get(i).getUsername(), hslist.get(i).getScore()));			
-			}
+				List<HighScore> hslist = hsl.getScores();
+
+				for (int i=0;i<hslist.size();i++) {
+					list.add(new LocalScore(hslist.get(i).getUsername(), hslist.get(i).getScore()));			
+				}
 			} catch (Exception e) {
 				;
 			}
-			
+
 			publishProgress(list);			
 
 			return null;
 		}
 		@Override
 		protected void onProgressUpdate(ArrayList<LocalScore>... values) {
-		
+
 
 			try {
 				finalizedQuestionExecution=true;
@@ -95,16 +88,16 @@ public class ServerScoreTab extends ScoreTab {
 			return;
 		}
 	}
-	
-	
+
+
 	private class TimeoutAsyncTask extends AsyncTask<Void, Integer, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			
+
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
-				
+
 				e.printStackTrace();
 			}
 			publishProgress(1);
@@ -114,9 +107,9 @@ public class ServerScoreTab extends ScoreTab {
 		}
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			
+
 			if (finalizedQuestionExecution) return;
-			
+
 			try {
 				dialog.dismiss();
 				AlertDialog.Builder builder = new AlertDialog.Builder(ServerScoreTab.this);
@@ -133,7 +126,7 @@ public class ServerScoreTab extends ScoreTab {
 
 				AlertDialog alert = builder.create();
 				alert.show();				
-				
+
 			} catch (Throwable e) {
 
 				e.printStackTrace();

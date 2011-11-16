@@ -83,21 +83,21 @@ public class MainMenuActivity extends Activity {
 	}
 
 	private boolean isOnline() {
-	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
-	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-	        return true;
-	    }
-	    return false;
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
-	
+
 	private void showPlay() {
 
 		Intent i = null;
 		if(!isOnline())	i = new Intent(this, QuestionActivity.class);
 		else i = new Intent(this, InternetQuestionActivity.class );
 		startActivity(i);
-		
+
 	}
 
 	private void showScores() {
