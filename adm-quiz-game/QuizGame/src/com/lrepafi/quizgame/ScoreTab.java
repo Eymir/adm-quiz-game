@@ -24,7 +24,6 @@ public class ScoreTab extends Activity {
 		sCtrl = getScoreController();
 		loadData(sCtrl);
 		
-		drawTable();
 
 	}
 	

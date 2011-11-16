@@ -81,7 +81,6 @@ public class InternetQuestionController {
 	
 	public void init(SharedPreferences prefs) {
 		loadSettings(prefs);
-		init();
 	}
 	
 	private void saveScore() {
@@ -222,92 +221,6 @@ public class InternetQuestionController {
 		
 	}
 	
-	
-	public void init() {
-		//TODO add sql binding for retrieve question
-
-		//checkAndCreateDatabaseIfNotExists();
-		/*SQLiteDatabase db=null;
-		
-		try {
-
-			//db = SQLiteDatabase.openDatabase("supertrivialgame",
-			//null,
-			//SQLiteDatabase.CREATE_IF_NECESSARY);
-			
-			db = SQLiteDatabase.openOrCreateDatabase("supertrivialgame", null);
-			
-		}
-
-		catch (SQLiteException e) {
-
-			Toast.makeText(caller, "Exception", Toast.LENGTH_SHORT);
-			
-		}*/
-		
-		 DataBaseHelper myDbHelper = new DataBaseHelper((Context)caller);
-		 
-	        try {
-	 
-	        	myDbHelper.createDataBase();
-	 
-	 	} catch (IOException ioe) {
-	 
-	 		throw new Error("Unable to create database");
-	 
-	 	}
-	 
-	 	try {
-	 
-	 		myDbHelper.openDataBase();
-	 		
-	 
-	 	}catch(SQLException sqle){
-	 
-	 		throw sqle;
-	 
-	 	}
-	 	
-	 	//SQLiteDatabase db = myDbHelper.getReadableDatabase();
-
-	 	
-			//Cursor c = db.rawQuery("select * from questions",null);
-	 	    Cursor c = myDbHelper.getCursor();
-	 	
-			int subjectCol = c.getColumnIndex("subject");
-			int questionTextCol = c.getColumnIndex("questiontext");
-			int answer1Col = c.getColumnIndex("answer1");
-			int answer2Col = c.getColumnIndex("answer2");
-			int answer3Col = c.getColumnIndex("answer3");
-			int answer4Col = c.getColumnIndex("answer4");
-			int rightanswerCol = c.getColumnIndex("rightanswer");
-			int helpCol = c.getColumnIndex("help");
-
-			while (c.moveToNext()) {
-
-				Question q = new Question();
-				q.setSubject(c.getString(subjectCol));
-				
-				if (!(Helpers.isPreferredPreference(settings.getPreferences(), q.getSubject()))) continue;
-				
-				q.setQuestionText(c.getString(questionTextCol));
-				q.setAnswers(new String[]{
-						c.getString(answer1Col),
-						c.getString(answer2Col),
-						c.getString(answer3Col),
-						c.getString(answer4Col)
-				});
-				q.setRightAnswer(c.getInt(rightanswerCol));
-				q.setHelp(c.getInt(helpCol));
-				
-				list.add(q);
-
-			}
-			
-			myDbHelper.close();
-			//db.close();
-
-	}
 	
 	public void addQuestion(Question q) {
 		list.add(q);

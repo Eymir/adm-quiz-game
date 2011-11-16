@@ -32,7 +32,7 @@ import android.util.Log;
 
 public class RestMethodsHandler {
 
-	private String basePath=null;
+	private String basePath="http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/";
 
 	public RestMethodsHandler(String basePath) {
 		this.basePath=basePath;
@@ -83,7 +83,7 @@ public class RestMethodsHandler {
 
 	public void invokeFriendInvitation(String email, String guest) {
 		HttpClient client = new DefaultHttpClient();
-		HttpPost request = new HttpPost("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/friends"); 
+		HttpPost request = new HttpPost(basePath+"friends"); 
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
 		pairs.add(new BasicNameValuePair("friend_address", guest));
@@ -116,9 +116,10 @@ public class RestMethodsHandler {
 		HttpClient client = new DefaultHttpClient();
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
-		HttpGet request = new HttpGet("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/highscores?" + URLEncodedUtils.format(pairs, "utf-8"));
+		HttpGet request = new HttpGet(basePath+"highscores?" + URLEncodedUtils.format(pairs, "utf-8"));
 
 		HttpResponse response=null;
+		
 
 		try {
 			response = client.execute(request);
@@ -132,10 +133,6 @@ public class RestMethodsHandler {
 
 		String responseString = this.getResponse(response);
 
-
-		//TODO implementar json y exception handling(now sucks :))
-		//        :(_8^(|)
-
 		GsonBuilder builder = new GsonBuilder(); 
 		Gson gson = builder.create(); 
 		JSONObject json=null;
@@ -145,9 +142,16 @@ public class RestMethodsHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		HighScoreList ret = gson.fromJson(json.toString(), HighScoreList.class);
-
+		
+		HighScoreList ret = new HighScoreList();
+		try {
+			ret = gson.fromJson(json.toString(), HighScoreList.class);
+		}
+		catch (Exception e) {
+			;
+		}
 		return ret;
+		//return new HighScoreList();
 	}
 
 	/*
@@ -155,7 +159,7 @@ public class RestMethodsHandler {
 	 */
 	public int invokeNewGame(String email) {
 		HttpClient client = new DefaultHttpClient();
-		HttpPost request = new HttpPost("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/questions"); 
+		HttpPost request = new HttpPost(basePath+"questions"); 
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
 
@@ -180,7 +184,7 @@ public class RestMethodsHandler {
 			e.printStackTrace();
 		} 
 
-		String risp = this.getResponse(response);
+		String risp = sanitizeNumberString(this.getResponse(response));
 		int ret = 0;
 		
 		try {
@@ -193,6 +197,18 @@ public class RestMethodsHandler {
 		
 		return ret;
 
+
+		
+	}
+	
+	private String sanitizeNumberString(String str) {
+		StringBuffer stringBuffer = new StringBuffer();
+		for(int i=0;i<str.length();i++) {
+			if ((str.charAt(i) >= '0') && (str.charAt(i) <= '9')) stringBuffer.append(str.charAt(i));
+			else break;
+		}
+		
+		return stringBuffer.toString();
 	}
 
 	public Question invokeGetQuestion(String email, int question) {
@@ -201,7 +217,7 @@ public class RestMethodsHandler {
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
 		pairs.add(new BasicNameValuePair("question", String.valueOf(question)));
-		HttpGet request = new HttpGet("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/questions?" + URLEncodedUtils.format(pairs, "utf-8"));
+		HttpGet request = new HttpGet(basePath+"questions?" + URLEncodedUtils.format(pairs, "utf-8"));
 
 		HttpResponse response=null;
 
@@ -225,7 +241,17 @@ public class RestMethodsHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		Question q = gson.fromJson(json.toString(), Question.class);
+		
+		Question q = null;
+		try {
+
+		q = gson.fromJson(json.toString(), Question.class);
+		
+		}
+		
+		catch (Exception e) {
+			;
+		}
 
 		return q;
 	}
@@ -234,7 +260,7 @@ public class RestMethodsHandler {
 		HttpClient client = new DefaultHttpClient();
 		List<BasicNameValuePair> pairs = new ArrayList<BasicNameValuePair>(); 
 		pairs.add(new BasicNameValuePair("email", email));
-		HttpDelete request = new HttpDelete("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/questions?" + URLEncodedUtils.format(pairs, "utf-8"));
+		HttpDelete request = new HttpDelete(basePath+"questions?" + URLEncodedUtils.format(pairs, "utf-8"));
 
 		HttpResponse response=null;
 
@@ -257,7 +283,7 @@ public class RestMethodsHandler {
 		pairs.add(new BasicNameValuePair("email",email));
 		pairs.add(new BasicNameValuePair("username", user));
 		pairs.add(new BasicNameValuePair("score", String.valueOf(score)));
-		HttpPut request = new HttpPut("http://dakkon.disca.upv.es:8080/WebServiceTrivial/rest/highscores?" + URLEncodedUtils.format(pairs, "utf-8"));
+		HttpPut request = new HttpPut(basePath+"highscores?" + URLEncodedUtils.format(pairs, "utf-8"));
 
 		HttpResponse response=null;
 

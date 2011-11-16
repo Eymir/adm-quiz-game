@@ -3,110 +3,158 @@ package com.lrepafi.quizgame;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import com.lrepafi.quizgame.controllers.ScoreController;
+import com.lrepafi.quizgame.entities.HighScore;
+import com.lrepafi.quizgame.entities.HighScoreList;
+import com.lrepafi.quizgame.entities.LocalScore;
+import com.lrepafi.quizgame.entities.Question;
+import com.lrepafi.quizgame.entities.Settings;
+import com.lrepafi.quizgame.utils.RestMethodsHandler;
 
 
 public class ServerScoreTab extends ScoreTab {
 
+	public static String PREFERENCES = "QuizGamePreferences"; 
+	public static String PREFERENCES_SERVER_NAME = "ServerName";
+	public static String PREFERENCES_USER_NAME = "UserName";
+	public static String PREFERENCES_EMAIL = "Email";
+	
+	private Dialog dialog;
+	private boolean finalizedQuestionExecution=false;
+	
+	private Settings settings;
+	
+	private String email;
+	private String servername;
+	
 	@Override
 	protected void loadData(ScoreController s) {
-		/*FIXME To delete this
-		FileOutputStream fos=null;
-		try {
-			fos = openFileOutput("scores.xml",  
-			        Context.MODE_PRIVATE);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
 		
-		s.persist(fos);*/
+		SharedPreferences preferences = 
+		      getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 		
+		email = preferences.getString(this.PREFERENCES_EMAIL,"");
+		servername = preferences.getString(this.PREFERENCES_SERVER_NAME, "");
+		
+		dialog = ProgressDialog.show(ServerScoreTab.this, "", 
+                "Loading scores. Please wait...", true);
+		
+		GetQuestionAsyncTask task = new GetQuestionAsyncTask();
+		task.execute();
+		TimeoutAsyncTask task2 = new TimeoutAsyncTask();
+		task2.execute();
 	}
 	
 	@Override
 	protected ScoreController getScoreController() {
 
-		/*FileOutputStream fos=null;
-		try {
-			fos = openFileOutput("scores.xml",  
-			        Context.MODE_PRIVATE);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-
-		FileInputStream fin=null;
-		try {
-			fin = openFileInput("scores.xml");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-*/
-
 		return new ScoreController(true);
 	}
+	
+	private class GetQuestionAsyncTask extends AsyncTask<Void, ArrayList<LocalScore>, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			//sCtrl.load(servername, email);
+			
+			RestMethodsHandler rmh = new RestMethodsHandler(servername);
+			HighScoreList hsl = rmh.invokeGetScores(email);
+			ArrayList<LocalScore> list = new ArrayList<LocalScore>();
+			
+			try {
+			List<HighScore> hslist = hsl.getScores();
+			
+			for (int i=0;i<hslist.size();i++) {
+				list.add(new LocalScore(hslist.get(i).getUsername(), hslist.get(i).getScore()));			
+			}
+			} catch (Exception e) {
+				;
+			}
+			
+			//Question q = rmh.invokeGetQuestion(qController.getSettings().getEmail(), qController.getQuestionNumber());
+			publishProgress(list);			
+
+			return null;
+		}
+		@Override
+		protected void onProgressUpdate(ArrayList<LocalScore>... values) {
+			// TODO Auto-generated method stub
+
+			try {
+				finalizedQuestionExecution=true;
+				sCtrl.setScores(values[0]);
+				dialog.dismiss();
+				drawTable();
+			}
+			catch (Exception e) {
+				Log.d("QUIZGAME", "Timeout screen in AsyncTask: "+e.getMessage());
+			}
 
 
-	/** Called when the activity is first created. */
-	/*	@Override
-	public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
+			return;
+		}
+	}
+	
+	
+	private class TimeoutAsyncTask extends AsyncTask<Void, Integer, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			publishProgress(1);
 
-	setContentView(R.layout.tabletest);
 
-	TableLayout table = (TableLayout) findViewById(R.id.tableLayoutScores);
-	TableRow row = new TableRow(this);
-	TextView tv = new TextView(this);
+			return null;
+		}
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			// TODO Auto-generated method stub
+			if (finalizedQuestionExecution) return;
+			
+			try {
+				dialog.dismiss();
+				AlertDialog.Builder builder = new AlertDialog.Builder(ServerScoreTab.this);
 
-	//Set headers
-	tv.setText("Username");
-	tv.setTypeface(null, Typeface.BOLD);
-	tv.setTextSize(25);
-	tv.setTextColor(Color.RED);
-	row.addView(tv);
-	tv = new TextView(this);
-	tv.setText("Score");
-	tv.setTypeface(null, Typeface.BOLD);
-	tv.setTextSize(25);
-	tv.setTextColor(Color.RED);
-	row.addView(tv);
-	tv = new TextView(this);
-	tv.setText("Ranking");
-	tv.setTypeface(null, Typeface.BOLD);
-	tv.setTextSize(25);
-	tv.setTextColor(Color.RED);
-	row.addView(tv);
-	table.addView(row);
+				//InternetQuestionActivity.this.finish();
+				//Toast.makeText(InternetQuestionActivity.this, "Sorry!There was a problem in the internet connection!", Toast.LENGTH_SHORT);
 
-	ScoreController sCtrl = new ScoreController(true);
+				builder.setMessage("Ops!There was a problem with the internet connection!")
+				.setCancelable(false)
+				.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
 
-	for (int i=0;i<sCtrl.getScores().size();i++) {
-		addScore(table, sCtrl.getScores().get(i), i+1);
+						;
+
+					}
+				});
+
+				AlertDialog alert = builder.create();
+				alert.show();				
+				
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return;
+		}
 	}
 
-	}
-
-	private void addScore(TableLayout table, Score s, int ranking) {
-
-		TableRow row = new TableRow(ServerScoreTab.this);
-		TextView tv = new TextView(ServerScoreTab.this);
-		tv.setText(s.getUsername());
-		tv.setTextSize(20);
-		row.addView(tv);
-		tv = new TextView(ServerScoreTab.this);
-		tv.setText(String.valueOf(s.getScore()));
-		tv.setTextSize(20);
-		row.addView(tv);
-		tv = new TextView(ServerScoreTab.this);
-		tv.setText(String.valueOf(ranking));
-		tv.setTextSize(20);
-		row.addView(tv);
-		table.addView(row);
-
-	}*/
 }
