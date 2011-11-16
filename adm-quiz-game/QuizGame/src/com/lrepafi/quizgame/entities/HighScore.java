@@ -40,7 +40,7 @@ public class HighScore implements Comparable<HighScore>{
 	}
 
 	public int compareTo(HighScore o) {
-		// TODO Auto-generated method stub
+		
 		if (this.getScore() > o.getScore()) {
 			return 1;
 		}

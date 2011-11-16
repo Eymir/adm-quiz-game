@@ -52,10 +52,10 @@ public class RestMethodsHandler {
 			try {
 				stream = entity.getContent();
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} 
 			BufferedReader reader = new BufferedReader( 
@@ -67,13 +67,13 @@ public class RestMethodsHandler {
 					sb.append(line + "\n"); 
 				}
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			} 
 			try {
 				stream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} 
 			responseString = sb.toString(); 
@@ -92,20 +92,20 @@ public class RestMethodsHandler {
 		try {
 			request.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+			
 			Log.d("RESTERROR","Error in encoding entity");
 		} 
 
 
 		try {
-			HttpResponse response = client.execute(request);
+			client.execute(request);
 			Log.d("RESTOK", "All is ok");
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			Log.d("RESTERROR", "RPC Execution error");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 			Log.d("RESTERROR", "RPC Execution error");
 		} 
@@ -124,10 +124,10 @@ public class RestMethodsHandler {
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} 
 
@@ -139,7 +139,7 @@ public class RestMethodsHandler {
 		try {
 			json = new JSONObject(responseString);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		} 
 		
@@ -151,7 +151,7 @@ public class RestMethodsHandler {
 			;
 		}
 		return ret;
-		//return new HighScoreList();
+
 	}
 
 	/*
@@ -168,7 +168,7 @@ public class RestMethodsHandler {
 		try {
 			request.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} 
 
@@ -177,10 +177,10 @@ public class RestMethodsHandler {
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		} 
 
@@ -224,10 +224,10 @@ public class RestMethodsHandler {
 		try {
 			response = client.execute(request);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		} 
 
@@ -238,7 +238,7 @@ public class RestMethodsHandler {
 		try {
 			json = new JSONObject(responseString);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} 
 		
@@ -262,15 +262,13 @@ public class RestMethodsHandler {
 		pairs.add(new BasicNameValuePair("email", email));
 		HttpDelete request = new HttpDelete(basePath+"questions?" + URLEncodedUtils.format(pairs, "utf-8"));
 
-		HttpResponse response=null;
-
 		try {
-			response = client.execute(request);
+			client.execute(request);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} 
 
@@ -285,17 +283,14 @@ public class RestMethodsHandler {
 		pairs.add(new BasicNameValuePair("score", String.valueOf(score)));
 		HttpPut request = new HttpPut(basePath+"highscores?" + URLEncodedUtils.format(pairs, "utf-8"));
 
-		HttpResponse response=null;
 
 		try {
-			response = client.execute(request);
+			client.execute(request);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+
 			Log.d("RESTERROR", "RPC Execution error");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+
 			Log.d("RESTERROR", "RPC Execution error");
 		} 
 

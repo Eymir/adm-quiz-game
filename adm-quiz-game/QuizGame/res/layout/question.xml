@@ -22,6 +22,16 @@
 			android:layout_marginLeft="10dip"></ImageView>
 	</RelativeLayout>
 
+	<ScrollView android:id="@+id/ScrollView01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+	android:id="@+id/LinearLayoutSubScroll01"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent" 
+    android:orientation="vertical" 
+    android:scrollbars="vertical"
+    >
+    
 	<RelativeLayout android:layout_width="match_parent"
 		android:id="@+id/relativeLayout2" android:layout_height="wrap_content"
 		android:layout_marginTop="10dip">
@@ -102,6 +112,8 @@
 			android:layout_marginTop="10dip" android:textStyle="bold"
 			android:layout_centerHorizontal="true"></Button>
 	</RelativeLayout>
+	</LinearLayout>
+	</ScrollView>
 	<!-- <Button android:layout_height="wrap_content" android:id="@+id/btnAnswer5" 
 		android:gravity="center|center_horizontal" android:layout_width="match_parent" 
 		android:background="@drawable/almost_transparent" android:text="Answer 5" 
