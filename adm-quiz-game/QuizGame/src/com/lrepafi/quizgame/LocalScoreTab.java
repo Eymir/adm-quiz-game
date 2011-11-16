@@ -27,6 +27,8 @@ public class LocalScoreTab extends ScoreTab {
 		} 
 		
 		s.load(fin);
+		
+		drawTable();
 	}
 	
 	@Override

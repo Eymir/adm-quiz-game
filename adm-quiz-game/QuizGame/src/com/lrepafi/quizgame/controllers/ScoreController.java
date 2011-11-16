@@ -2,10 +2,12 @@ package com.lrepafi.quizgame.controllers;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 
 import com.lrepafi.quizgame.entities.*;
+import com.lrepafi.quizgame.utils.RestMethodsHandler;
 import com.lrepafi.quizgame.utils.XMLScoreFactory;
 
 public class ScoreController {
@@ -76,14 +78,24 @@ ScoresScreen.this.setProgressBarIndeterminateVisibility(true);
 		
 	}
 
-	private void load(String server) {
+	public void load(String server, String email) {
 		//TODO
+		RestMethodsHandler rmh = new RestMethodsHandler(server);
+		HighScoreList hsl = rmh.invokeGetScores(email);
+				
+		List<HighScore> hslist = hsl.getScores();
+		if (hslist == null) return;
+		
+		ArrayList<LocalScore> list = new ArrayList<LocalScore>();
+		
+		for (int i=0;i<hslist.size();i++) {
+			list.add(new LocalScore(hslist.get(i).getUsername(), hslist.get(i).getScore()));			
+		}
+				
+		scores = list;
+		
 	}
-
-	public void addScore(String username, int score) {
-		//TODO
-	}
-
+	
 	public void deleteAll() {
 		scores = new ArrayList<LocalScore>();
 		//persist();

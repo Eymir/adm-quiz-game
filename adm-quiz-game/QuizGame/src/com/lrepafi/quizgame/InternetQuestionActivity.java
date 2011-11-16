@@ -81,20 +81,30 @@ public class InternetQuestionActivity extends Activity {
 			getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
 		time = preferences.getInt(PREFERENCES_TIME, 10*TOTAL_TIME);
+		qController.init(preferences);
+		
 		qController.setQ(preferences.getInt(PREFERENCES_QUESTION_NO, 0));
 		qController.setScore(preferences.getInt(PREFERENCES_QUESTION_SCORE, 0));
-
+				
 		//Internet operations: i have to start a new game and obtain the nr of questions
 		//TODO asynctask
+		Log.d("AAAAA",qController.getSettings().getEmail());
 		
-		dialog = ProgressDialog.show(InternetQuestionActivity.this, "", 
+		Log.e("AAAAA", qController.getSettings().getEmail());
+		
+		try {
+			dialog = ProgressDialog.show(InternetQuestionActivity.this, "", 
                 "Loading number of questions. Please wait...", true);
+		}
+		catch (Exception e) {
+			;
+		}
 		
 		NewGameAsyncTask task = new NewGameAsyncTask();
 		task.execute();
 		this.finalizedQuestionExecution=false;
-		TimeoutAsyncTask task2 = new TimeoutAsyncTask();
-		task2.execute();
+		//TimeoutAsyncTask task2 = new TimeoutAsyncTask();
+		//task2.execute();
 		
 		
 		/*RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
@@ -376,7 +386,14 @@ public class InternetQuestionActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
-			int no = rmh.invokeNewGame(qController.getSettings().getEmail());
+			int no = 0;
+			
+			try {
+			no = rmh.invokeNewGame(qController.getSettings().getEmail());
+			}
+			catch (Exception e) {
+				;
+			}
 			publishProgress(no);
 
 
@@ -390,11 +407,11 @@ public class InternetQuestionActivity extends Activity {
 				finalizedQuestionExecution=true;
 				dialog.hide();
 				qController.setTotQuestions(values[0]);
-				
+				Toast.makeText(InternetQuestionActivity.this, "Hi!This game has "+values[0]+" questions!", Toast.LENGTH_SHORT).show();
+
 				loadQuestion();
 				
-				Toast.makeText(InternetQuestionActivity.this, "Hi!This game has "+values[0]+" questions!", Toast.LENGTH_SHORT).show();
-			}
+							}
 			catch (Exception e) {
 				Log.d("QUIZGAME", "Timeout screen in AsyncTask: "+e.getMessage());
 			}
