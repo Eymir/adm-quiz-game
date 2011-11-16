@@ -24,7 +24,7 @@ public class ServerScoreTab extends ScoreTab {
 
 
 	private Dialog dialog;
-	private boolean finalizedQuestionExecution=false;
+	private boolean finalizedScoresExecution=false;
 
 	private String email;
 	private String servername;
@@ -41,13 +41,13 @@ public class ServerScoreTab extends ScoreTab {
 		dialog = ProgressDialog.show(ServerScoreTab.this, "", 
 				"Loading scores. Please wait...", true);
 
-		GetQuestionAsyncTask task = new GetQuestionAsyncTask();
+		GetScoresAsyncTask task = new GetScoresAsyncTask();
 		task.execute();
 		TimeoutAsyncTask task2 = new TimeoutAsyncTask();
 		task2.execute();
 	}
 
-	private class GetQuestionAsyncTask extends AsyncTask<Void, ArrayList<LocalScore>, Void> {
+	private class GetScoresAsyncTask extends AsyncTask<Void, ArrayList<LocalScore>, Void> {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -75,7 +75,7 @@ public class ServerScoreTab extends ScoreTab {
 
 
 			try {
-				finalizedQuestionExecution=true;
+				finalizedScoresExecution=true;
 				sCtrl.setScores(values[0]);
 				dialog.dismiss();
 				drawTable();
@@ -108,7 +108,7 @@ public class ServerScoreTab extends ScoreTab {
 		@Override
 		protected void onProgressUpdate(Integer... values) {
 
-			if (finalizedQuestionExecution) return;
+			if (finalizedScoresExecution) return;
 
 			try {
 				dialog.dismiss();

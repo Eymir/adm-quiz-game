@@ -56,6 +56,7 @@ public class InternetQuestionActivity extends Activity {
 		Editor editor = preferences.edit();
 		editor.putInt(Globals.PREFERENCES_QUESTION_SCORE, qController.getScore());
 		editor.putInt(Globals.PREFERENCES_TIME, time);
+		editor.putBoolean(Globals.PREFERENCES_IS_INTERNET, true);
 
 		if (qController.getQuestionNumber() > 0) editor.putInt(Globals.PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
 		else editor.putInt(Globals.PREFERENCES_QUESTION_NO, 0);
@@ -75,12 +76,20 @@ public class InternetQuestionActivity extends Activity {
 		preferences = 
 			getSharedPreferences(Globals.PREFERENCES, Context.MODE_PRIVATE);
 
-		time = preferences.getInt(Globals.PREFERENCES_TIME, 10*TOTAL_TIME);
+
 		qController.init(preferences);
 
-		qController.setQ(preferences.getInt(Globals.PREFERENCES_QUESTION_NO, 0));
-		qController.setScore(preferences.getInt(Globals.PREFERENCES_QUESTION_SCORE, 0));
-
+		if (preferences.getBoolean(Globals.PREFERENCES_IS_INTERNET, true))
+		{
+			time = preferences.getInt(Globals.PREFERENCES_TIME, 10*TOTAL_TIME);
+			qController.setQ(preferences.getInt(Globals.PREFERENCES_QUESTION_NO, 0));
+			qController.setScore(preferences.getInt(Globals.PREFERENCES_QUESTION_SCORE, 0));
+		}
+		else {
+			qController.setQ(0);
+			qController.setScore(0);
+			time=10*TOTAL_TIME;
+		}
 		//Internet operations: i have to start a new game and obtain the nr of questions
 
 		try {
