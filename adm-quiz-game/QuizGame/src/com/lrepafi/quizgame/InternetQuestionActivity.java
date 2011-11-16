@@ -65,7 +65,6 @@ public class InternetQuestionActivity extends Activity {
 		if (qController.getQuestionNumber() > 0) editor.putInt(PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
 		else editor.putInt(PREFERENCES_QUESTION_NO, 0);
 
-
 		editor.commit();
 
 		super.onPause();
@@ -87,6 +86,9 @@ public class InternetQuestionActivity extends Activity {
 
 		//Internet operations: i have to start a new game and obtain the nr of questions
 		//TODO asynctask
+		
+		dialog = ProgressDialog.show(InternetQuestionActivity.this, "", 
+                "Loading number of questions. Please wait...", true);
 		
 		NewGameAsyncTask task = new NewGameAsyncTask();
 		task.execute();
@@ -110,6 +112,15 @@ public class InternetQuestionActivity extends Activity {
 		answerBtn[1] = (Button) findViewById(R.id.btnAnswer2);
 		answerBtn[2] = (Button) findViewById(R.id.btnAnswer3);
 		answerBtn[3] = (Button) findViewById(R.id.btnAnswer4);
+		
+		//Assign initial values
+		questionText.setText("");
+		questionTextN.setText("");
+		scoreText.setText("");
+		answerBtn[0].setText("");
+		answerBtn[1].setText("");
+		answerBtn[2].setText("");
+		answerBtn[3].setText("");
 
 		//Adding onclick listeners to every button
 
@@ -153,11 +164,11 @@ public class InternetQuestionActivity extends Activity {
 
 
 		});
-
+		
 		//Update score on text
 		updateScore();
 		//Load first question
-		loadQuestion();
+		//loadQuestion();
 
 
 	}
@@ -190,7 +201,7 @@ public class InternetQuestionActivity extends Activity {
 		else {
 			
 			dialog = ProgressDialog.show(InternetQuestionActivity.this, "", 
-                    "Loading. Please wait...", true);
+                    "Loading question. Please wait...", true);
 			GetQuestionAsyncTask task = new GetQuestionAsyncTask();
 			task.execute();
 			
@@ -377,7 +388,11 @@ public class InternetQuestionActivity extends Activity {
 
 			try {
 				finalizedQuestionExecution=true;
+				dialog.hide();
 				qController.setTotQuestions(values[0]);
+				
+				loadQuestion();
+				
 				Toast.makeText(InternetQuestionActivity.this, "Hi!This game has "+values[0]+" questions!", Toast.LENGTH_SHORT).show();
 			}
 			catch (Exception e) {
@@ -473,7 +488,7 @@ public class InternetQuestionActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			publishProgress(1);
 
 
 			return null;
@@ -484,8 +499,25 @@ public class InternetQuestionActivity extends Activity {
 			if (finalizedQuestionExecution) return;
 			
 			try {
-				InternetQuestionActivity.this.finalize();
-				Toast.makeText(InternetQuestionActivity.this, "Sorry!There was a problem in the internet connection!", Toast.LENGTH_SHORT);
+				dialog.dismiss();
+				AlertDialog.Builder builder = new AlertDialog.Builder(InternetQuestionActivity.this);
+
+				//InternetQuestionActivity.this.finish();
+				//Toast.makeText(InternetQuestionActivity.this, "Sorry!There was a problem in the internet connection!", Toast.LENGTH_SHORT);
+
+				builder.setMessage("Ops!There was a problem with the internet connection!")
+				.setCancelable(false)
+				.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+
+						InternetQuestionActivity.this.finish();
+
+					}
+				});
+
+				AlertDialog alert = builder.create();
+				alert.show();				
+				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

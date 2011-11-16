@@ -43,6 +43,8 @@ public class RestMethodsHandler {
 	 */
 	private String getResponse(HttpResponse response) {
 
+		if (response == null) return "";
+		
 		HttpEntity entity = response.getEntity(); 
 		String responseString = "";
 		if (entity != null) { 
@@ -179,8 +181,17 @@ public class RestMethodsHandler {
 		} 
 
 		String risp = this.getResponse(response);
+		int ret = 0;
 		
-		return Integer.parseInt(risp);
+		try {
+			ret = Integer.parseInt(risp);
+		}
+		catch (Exception e) {
+			ret = 0;
+		}
+		
+		
+		return ret;
 
 	}
 
