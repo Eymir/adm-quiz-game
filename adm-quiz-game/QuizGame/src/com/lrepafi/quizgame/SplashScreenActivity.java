@@ -7,6 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SplashScreenActivity extends Activity {
 	/** Called when the activity is first created. */
@@ -17,11 +18,6 @@ public class SplashScreenActivity extends Activity {
 
 		//Bind animation to the 1st question mark
 		final ImageView image1 = (ImageView) findViewById(R.id.imageView1); 
-
-		/*
-		 * You can create more subsequent animation using image1.setAnimation(anim2)
-		 * inside the AnimationListener->onAnimationEnd
-		 */
 		
 		Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.questionmarkanimation); 
 
@@ -34,12 +30,12 @@ public class SplashScreenActivity extends Activity {
 			}
 
 			public void onAnimationRepeat(Animation animation) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
 			public void onAnimationStart(Animation animation) {
-				// TODO Auto-generated method stub
+				
 
 			}
 
@@ -52,6 +48,10 @@ public class SplashScreenActivity extends Activity {
 		final ImageView image2 = (ImageView) findViewById(R.id.imageView2); 
 		Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.questionmarkanimation); 
 		image2.setAnimation(anim2);
+		
+		final TextView textview1 = (TextView) findViewById(R.id.textView1);
+		Animation anim3 = AnimationUtils.loadAnimation(this, R.anim.anim_credits);
+		textview1.setAnimation(anim3);
 
 	}
 

@@ -66,7 +66,8 @@ public class ScoreTab extends Activity {
 	}
 
 	protected ScoreController getScoreController() {
-		return new ScoreController(false);
+		//return new ScoreController(false);
+		return new ScoreController();
 	}
 
 	protected void addScore(Context c, TableLayout table, LocalScore s, int ranking) {

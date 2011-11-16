@@ -22,10 +22,10 @@ public class CreditsActivity extends Activity {
 		txt1.setAnimation(anim);
 		txt2.setAnimation(anim);
 		txt3.setAnimation(anim);
-		
+
 		final ImageView im1 = (ImageView) findViewById(R.id.imageView3);
 		final ImageView im2 = (ImageView) findViewById(R.id.imageView4);
-		
+
 		im1.setAnimation(anim);
 		im2.setAnimation(anim);
 

@@ -1,7 +1,5 @@
 package com.lrepafi.quizgame;
 
-import com.lrepafi.quizgame.utils.RestMethodsHandler;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainMenuActivity extends Activity {
 
@@ -61,7 +58,7 @@ public class MainMenuActivity extends Activity {
 
 	@Override 
 	public boolean onCreateOptionsMenu(Menu menu) { 
-		// TODO Auto‐generated method stub 
+
 		MenuInflater inflater = getMenuInflater(); 
 		inflater.inflate(R.menu.mainmenu, menu); 
 		return true; 
@@ -101,13 +98,6 @@ public class MainMenuActivity extends Activity {
 		else i = new Intent(this, InternetQuestionActivity.class );
 		startActivity(i);
 		
-		/*qController.init(preferences);
-		else {
-			
-
-			internet=true;
-		}*/
-
 	}
 
 	private void showScores() {

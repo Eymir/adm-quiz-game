@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import android.app.Activity;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.Menu;
@@ -24,25 +22,18 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 
-
-
-//import android.widget.TextView;
-
 import com.lrepafi.quizgame.controllers.*;
 import com.lrepafi.quizgame.entities.*;
-import com.lrepafi.quizgame.utils.RestMethodsHandler;
+import com.lrepafi.quizgame.utils.Globals;
 
 public class QuestionActivity extends Activity {
 
-	public static String PREFERENCES = "QuizGamePreferences"; 
-	public static String PREFERENCES_TIME = "Time"; 
-	public static String PREFERENCES_QUESTION_NO = "QuestionNo";
-	public static String PREFERENCES_QUESTION_SCORE = "QuestionScore";
+
 	private SharedPreferences preferences = null;
 		
 	
 	QuestionController qController = new QuestionController(this);
-	//Button btnPlay = (Button) findViewById(R.id.btnPlay);
+
 	Button[] answerBtn = new Button[4];
 	TextView questionText = null;
 	TextView questionTextN = null;
@@ -55,13 +46,13 @@ public class QuestionActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
+
 		Editor editor = preferences.edit();
-		editor.putInt(PREFERENCES_QUESTION_SCORE, qController.getScore());
-		editor.putInt(PREFERENCES_TIME, time);
+		editor.putInt(Globals.PREFERENCES_QUESTION_SCORE, qController.getScore());
+		editor.putInt(Globals.PREFERENCES_TIME, time);
 		
-		if (qController.getQuestionNumber() > 0) editor.putInt(PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
-		else editor.putInt(PREFERENCES_QUESTION_NO, 0);
+		if (qController.getQuestionNumber() > 0) editor.putInt(Globals.PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
+		else editor.putInt(Globals.PREFERENCES_QUESTION_NO, 0);
 		
 		
 		editor.commit();
@@ -77,11 +68,11 @@ public class QuestionActivity extends Activity {
 		setContentView(R.layout.question);
 
 		preferences = 
-		      getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+		      getSharedPreferences(Globals.PREFERENCES, Context.MODE_PRIVATE);
 
-		time = preferences.getInt(PREFERENCES_TIME, 10*TOTAL_TIME);
-		qController.setQ(preferences.getInt(PREFERENCES_QUESTION_NO, 0));
-		qController.setScore(preferences.getInt(PREFERENCES_QUESTION_SCORE, 0));
+		time = preferences.getInt(Globals.PREFERENCES_TIME, 10*TOTAL_TIME);
+		qController.setQ(preferences.getInt(Globals.PREFERENCES_QUESTION_NO, 0));
+		qController.setScore(preferences.getInt(Globals.PREFERENCES_QUESTION_SCORE, 0));
 		qController.init(preferences);
 		
 		//Binding button/variables
@@ -147,7 +138,7 @@ public class QuestionActivity extends Activity {
 
 	@Override 
 	public boolean onCreateOptionsMenu(Menu menu) { 
-		// TODO Auto‐generated method stub 
+ 
 		MenuInflater inflater = getMenuInflater(); 
 		inflater.inflate(R.menu.question, menu); 
 		return true; 
@@ -157,7 +148,7 @@ public class QuestionActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+	
 		int n = qController.getHelp();
 		answerBtn[n].setTextColor(Color.GRAY);
 
@@ -204,8 +195,6 @@ public class QuestionActivity extends Activity {
 				answerBtn[i].setText((q.getAnswers())[i]);
 			}
 
-			//time=10*TOTAL_TIME;
-
 			progress.setMax(10*TOTAL_TIME);
 			progress.setProgress(time);
 
@@ -245,7 +234,7 @@ public class QuestionActivity extends Activity {
 		}
 		else {
 			message = "Sorry!The correct answer was "+correctAns;
-			//message = "Sorry!Your answer was wrong!";
+
 		}
 
 
@@ -292,7 +281,7 @@ public class QuestionActivity extends Activity {
 	private class TimeAsyncTask extends AsyncTask<Void, Integer, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
+
 			stop=false;
 			while ((time>=0) && (!stop)) {
 				try {
@@ -313,7 +302,7 @@ public class QuestionActivity extends Activity {
 		}
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
+
 			progress.setProgress(time);
 
 			if(time<=0) {
@@ -335,7 +324,7 @@ public class QuestionActivity extends Activity {
 	try {
 		fin = openFileInput("scores.xml");
 	} catch (FileNotFoundException e) {
-		// TODO Auto-generated catch block
+
 		e.printStackTrace();
 	}
 
@@ -349,7 +338,7 @@ public class QuestionActivity extends Activity {
 			fos = openFileOutput("scores.xml",  
 			        Context.MODE_PRIVATE);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} 
 		

@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:background="@drawable/nuageciel">
-	<ImageView android:src="@drawable/question_mark_icon_48"
+	<ImageView android:src="@drawable/question_mark_blue"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:id="@+id/imageView1" android:layout_alignParentLeft="true"
 		android:layout_marginLeft="20dip" android:layout_marginTop="20dip"></ImageView>
-	<ImageView android:src="@drawable/question_mark_icon_48"
+	<ImageView android:src="@drawable/question_mark_blue"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:id="@+id/imageView2" android:layout_alignParentRight="true"
 		android:layout_alignParentBottom="true" android:layout_marginBottom="20dip"

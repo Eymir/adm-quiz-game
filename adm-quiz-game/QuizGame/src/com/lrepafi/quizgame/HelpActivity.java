@@ -19,7 +19,7 @@ public class HelpActivity extends Activity {
 		setContentView(R.layout.instructions);
 
 		final TextView txtInstructions = (TextView) findViewById(R.id.textViewInstructions);
-		//txtInstructions.setText(instructions());
+
 		txtInstructions.setTextColor(Color.BLACK);
 
 		InputStream inputStream = getResources().openRawResource(R.raw.help); 

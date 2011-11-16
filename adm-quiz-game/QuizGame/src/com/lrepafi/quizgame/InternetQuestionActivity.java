@@ -6,8 +6,6 @@ import java.io.FileOutputStream;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.Menu;
@@ -31,20 +29,17 @@ import android.graphics.Color;
 
 import com.lrepafi.quizgame.controllers.*;
 import com.lrepafi.quizgame.entities.*;
+import com.lrepafi.quizgame.utils.Globals;
 import com.lrepafi.quizgame.utils.RestMethodsHandler;
 
 public class InternetQuestionActivity extends Activity {
 
-	public static String PREFERENCES = "QuizGamePreferences"; 
-	public static String PREFERENCES_TIME = "Time"; 
-	public static String PREFERENCES_QUESTION_NO = "QuestionNo";
-	public static String PREFERENCES_QUESTION_SCORE = "QuestionScore";
 	private SharedPreferences preferences = null;
 	private ProgressDialog dialog = null;
 	private boolean finalizedQuestionExecution=false;
 
 	InternetQuestionController qController = new InternetQuestionController(this);
-	//Button btnPlay = (Button) findViewById(R.id.btnPlay);
+
 	Button[] answerBtn = new Button[4];
 	TextView questionText = null;
 	TextView questionTextN = null;
@@ -57,13 +52,13 @@ public class InternetQuestionActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
-		Editor editor = preferences.edit();
-		editor.putInt(PREFERENCES_QUESTION_SCORE, qController.getScore());
-		editor.putInt(PREFERENCES_TIME, time);
 
-		if (qController.getQuestionNumber() > 0) editor.putInt(PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
-		else editor.putInt(PREFERENCES_QUESTION_NO, 0);
+		Editor editor = preferences.edit();
+		editor.putInt(Globals.PREFERENCES_QUESTION_SCORE, qController.getScore());
+		editor.putInt(Globals.PREFERENCES_TIME, time);
+
+		if (qController.getQuestionNumber() > 0) editor.putInt(Globals.PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
+		else editor.putInt(Globals.PREFERENCES_QUESTION_NO, 0);
 
 		editor.commit();
 
@@ -78,19 +73,15 @@ public class InternetQuestionActivity extends Activity {
 		setContentView(R.layout.question);
 
 		preferences = 
-			getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+			getSharedPreferences(Globals.PREFERENCES, Context.MODE_PRIVATE);
 
-		time = preferences.getInt(PREFERENCES_TIME, 10*TOTAL_TIME);
+		time = preferences.getInt(Globals.PREFERENCES_TIME, 10*TOTAL_TIME);
 		qController.init(preferences);
 		
-		qController.setQ(preferences.getInt(PREFERENCES_QUESTION_NO, 0));
-		qController.setScore(preferences.getInt(PREFERENCES_QUESTION_SCORE, 0));
+		qController.setQ(preferences.getInt(Globals.PREFERENCES_QUESTION_NO, 0));
+		qController.setScore(preferences.getInt(Globals.PREFERENCES_QUESTION_SCORE, 0));
 				
 		//Internet operations: i have to start a new game and obtain the nr of questions
-		//TODO asynctask
-		Log.d("AAAAA",qController.getSettings().getEmail());
-		
-		Log.e("AAAAA", qController.getSettings().getEmail());
 		
 		try {
 			dialog = ProgressDialog.show(InternetQuestionActivity.this, "", 
@@ -103,17 +94,9 @@ public class InternetQuestionActivity extends Activity {
 		NewGameAsyncTask task = new NewGameAsyncTask();
 		task.execute();
 		this.finalizedQuestionExecution=false;
-		//TimeoutAsyncTask task2 = new TimeoutAsyncTask();
-		//task2.execute();
-		
-		
-		/*RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
-		int no = rmh.invokeNewGame(qController.getSettings().getEmail());
-		qController.setTotQuestions(no);
-		Toast.makeText(this, "Hi!This game has "+no+" questions!", Toast.LENGTH_SHORT).show();
-*/
-		
-		//Binding button/variables
+		TimeoutAsyncTask task2 = new TimeoutAsyncTask();
+		task2.execute();
+
 		questionText = (TextView) findViewById(R.id.textViewQuestion);
 		questionTextN = (TextView) findViewById(R.id.textViewQuestionN);
 		scoreText = (TextView) findViewById(R.id.textViewScore);
@@ -175,17 +158,14 @@ public class InternetQuestionActivity extends Activity {
 
 		});
 		
-		//Update score on text
-		updateScore();
-		//Load first question
-		//loadQuestion();
 
+		updateScore();
 
 	}
 
 	@Override 
 	public boolean onCreateOptionsMenu(Menu menu) { 
-		// TODO Auto‐generated method stub 
+
 		MenuInflater inflater = getMenuInflater(); 
 		inflater.inflate(R.menu.question, menu); 
 		return true; 
@@ -195,7 +175,7 @@ public class InternetQuestionActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
+
 		int n = qController.getHelp();
 		answerBtn[n].setTextColor(Color.GRAY);
 
@@ -206,7 +186,6 @@ public class InternetQuestionActivity extends Activity {
 
 		for (int k=0;k<answerBtn.length;k++) answerBtn[k].setTextColor(InternetQuestionActivity.this.getResources().getColor(R.color.questions_items));
 
-		//TODO this instruction must be under asynctask
 		if (!(qController.getNextQuestion())) loadQuestion(null);
 		else {
 			
@@ -256,11 +235,8 @@ public class InternetQuestionActivity extends Activity {
 				answerBtn[i].setText((q.getAnswers())[i]);
 			}
 
-			//time=10*TOTAL_TIME;
-
 			progress.setMax(10*TOTAL_TIME);
 			progress.setProgress(time);
-
 
 			task = new TimeAsyncTask();
 			task.execute();
@@ -297,7 +273,7 @@ public class InternetQuestionActivity extends Activity {
 		}
 		else {
 			message = "Sorry!The correct answer was "+correctAns;
-			//message = "Sorry!Your answer was wrong!";
+	
 		}
 
 
@@ -344,7 +320,7 @@ public class InternetQuestionActivity extends Activity {
 	private class TimeAsyncTask extends AsyncTask<Void, Integer, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
+
 			stop=false;
 			while ((time>=0) && (!stop)) {
 				try {
@@ -365,7 +341,7 @@ public class InternetQuestionActivity extends Activity {
 		}
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
+
 			progress.setProgress(time);
 
 			if(time<=0) {
@@ -384,7 +360,7 @@ public class InternetQuestionActivity extends Activity {
 	private class NewGameAsyncTask extends AsyncTask<Void, Integer, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
+
 			RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
 			int no = 0;
 			
@@ -401,13 +377,11 @@ public class InternetQuestionActivity extends Activity {
 		}
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
 
 			try {
 				finalizedQuestionExecution=true;
 				dialog.hide();
 				qController.setTotQuestions(values[0]);
-				Toast.makeText(InternetQuestionActivity.this, "Hi!This game has "+values[0]+" questions!", Toast.LENGTH_SHORT).show();
 
 				loadQuestion();
 				
@@ -424,7 +398,6 @@ public class InternetQuestionActivity extends Activity {
 	private class GetQuestionAsyncTask extends AsyncTask<Void, Question, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
 			RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
 			Question q = rmh.invokeGetQuestion(qController.getSettings().getEmail(), qController.getQuestionNumber());
 			publishProgress(q);
@@ -434,7 +407,7 @@ public class InternetQuestionActivity extends Activity {
 		}
 		@Override
 		protected void onProgressUpdate(Question... values) {
-			// TODO Auto-generated method stub
+
 
 			try {
 				dialog.dismiss();
@@ -453,7 +426,7 @@ public class InternetQuestionActivity extends Activity {
 	private class FinalizeAsyncTask extends AsyncTask<String, Integer, Long> {
 		@Override
 		protected Long doInBackground(String... params) {
-			// TODO Auto-generated method stub
+
 			
 			int count = params.length;
 			if (count<1) return null;
@@ -474,7 +447,7 @@ public class InternetQuestionActivity extends Activity {
 		try {
 			fin = openFileInput("scores.xml");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -488,7 +461,7 @@ public class InternetQuestionActivity extends Activity {
 			fos = openFileOutput("scores.xml",  
 					Context.MODE_PRIVATE);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} 
 		
@@ -498,11 +471,11 @@ public class InternetQuestionActivity extends Activity {
 	private class TimeoutAsyncTask extends AsyncTask<Void, Integer, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
+
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			publishProgress(1);
@@ -512,15 +485,12 @@ public class InternetQuestionActivity extends Activity {
 		}
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// TODO Auto-generated method stub
+
 			if (finalizedQuestionExecution) return;
 			
 			try {
 				dialog.dismiss();
 				AlertDialog.Builder builder = new AlertDialog.Builder(InternetQuestionActivity.this);
-
-				//InternetQuestionActivity.this.finish();
-				//Toast.makeText(InternetQuestionActivity.this, "Sorry!There was a problem in the internet connection!", Toast.LENGTH_SHORT);
 
 				builder.setMessage("Ops!There was a problem with the internet connection!")
 				.setCancelable(false)
@@ -536,7 +506,7 @@ public class InternetQuestionActivity extends Activity {
 				alert.show();				
 				
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 
