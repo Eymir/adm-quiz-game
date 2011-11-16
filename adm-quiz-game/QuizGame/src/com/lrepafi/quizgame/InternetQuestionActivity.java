@@ -77,20 +77,20 @@ public class InternetQuestionActivity extends Activity {
 
 		time = preferences.getInt(Globals.PREFERENCES_TIME, 10*TOTAL_TIME);
 		qController.init(preferences);
-		
+
 		qController.setQ(preferences.getInt(Globals.PREFERENCES_QUESTION_NO, 0));
 		qController.setScore(preferences.getInt(Globals.PREFERENCES_QUESTION_SCORE, 0));
-				
+
 		//Internet operations: i have to start a new game and obtain the nr of questions
-		
+
 		try {
 			dialog = ProgressDialog.show(InternetQuestionActivity.this, "", 
-                "Loading number of questions. Please wait...", true);
+					"Loading number of questions. Please wait...", true);
 		}
 		catch (Exception e) {
 			;
 		}
-		
+
 		NewGameAsyncTask task = new NewGameAsyncTask();
 		task.execute();
 		this.finalizedQuestionExecution=false;
@@ -105,7 +105,7 @@ public class InternetQuestionActivity extends Activity {
 		answerBtn[1] = (Button) findViewById(R.id.btnAnswer2);
 		answerBtn[2] = (Button) findViewById(R.id.btnAnswer3);
 		answerBtn[3] = (Button) findViewById(R.id.btnAnswer4);
-		
+
 		//Assign initial values
 		questionText.setText("");
 		questionTextN.setText("");
@@ -157,7 +157,7 @@ public class InternetQuestionActivity extends Activity {
 
 
 		});
-		
+
 
 		updateScore();
 
@@ -188,12 +188,12 @@ public class InternetQuestionActivity extends Activity {
 
 		if (!(qController.getNextQuestion())) loadQuestion(null);
 		else {
-			
+
 			dialog = ProgressDialog.show(InternetQuestionActivity.this, "", 
-                    "Loading question. Please wait...", true);
+					"Loading question. Please wait...", true);
 			GetQuestionAsyncTask task = new GetQuestionAsyncTask();
 			task.execute();
-			
+
 		}
 	}
 	private void loadQuestion(Question q) {
@@ -222,7 +222,7 @@ public class InternetQuestionActivity extends Activity {
 
 			AlertDialog alert = builder.create();
 			alert.show();
-			
+
 			FinalizeAsyncTask task = new FinalizeAsyncTask();
 			task.execute();
 		}
@@ -273,7 +273,7 @@ public class InternetQuestionActivity extends Activity {
 		}
 		else {
 			message = "Sorry!The correct answer was "+correctAns;
-	
+
 		}
 
 
@@ -363,9 +363,9 @@ public class InternetQuestionActivity extends Activity {
 
 			RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
 			int no = 0;
-			
+
 			try {
-			no = rmh.invokeNewGame(qController.getSettings().getEmail());
+				no = rmh.invokeNewGame(qController.getSettings().getEmail());
 			}
 			catch (Exception e) {
 				;
@@ -384,8 +384,8 @@ public class InternetQuestionActivity extends Activity {
 				qController.setTotQuestions(values[0]);
 
 				loadQuestion();
-				
-							}
+
+			}
 			catch (Exception e) {
 				Log.d("QUIZGAME", "Timeout screen in AsyncTask: "+e.getMessage());
 			}
@@ -394,7 +394,7 @@ public class InternetQuestionActivity extends Activity {
 			return;
 		}
 	}
-	
+
 	private class GetQuestionAsyncTask extends AsyncTask<Void, Question, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -422,18 +422,18 @@ public class InternetQuestionActivity extends Activity {
 			return;
 		}
 	}
-	
+
 	private class FinalizeAsyncTask extends AsyncTask<String, Integer, Long> {
 		@Override
 		protected Long doInBackground(String... params) {
 
-			
+
 			int count = params.length;
 			if (count<1) return null;
-			
+
 			RestMethodsHandler rmh = new RestMethodsHandler(qController.getSettings().getServerName());
 			rmh.invokeEndGame(qController.getSettings().getEmail());
-			
+
 			return null;
 		}
 
@@ -447,7 +447,7 @@ public class InternetQuestionActivity extends Activity {
 		try {
 			fin = openFileInput("scores.xml");
 		} catch (FileNotFoundException e) {
-			
+
 			e.printStackTrace();
 		}
 
@@ -461,10 +461,10 @@ public class InternetQuestionActivity extends Activity {
 			fos = openFileOutput("scores.xml",  
 					Context.MODE_PRIVATE);
 		} catch (FileNotFoundException e) {
-			
+
 			e.printStackTrace();
 		} 
-		
+
 		return fos;
 	}
 
@@ -487,7 +487,7 @@ public class InternetQuestionActivity extends Activity {
 		protected void onProgressUpdate(Integer... values) {
 
 			if (finalizedQuestionExecution) return;
-			
+
 			try {
 				dialog.dismiss();
 				AlertDialog.Builder builder = new AlertDialog.Builder(InternetQuestionActivity.this);
@@ -504,7 +504,7 @@ public class InternetQuestionActivity extends Activity {
 
 				AlertDialog alert = builder.create();
 				alert.show();				
-				
+
 			} catch (Throwable e) {
 
 				e.printStackTrace();

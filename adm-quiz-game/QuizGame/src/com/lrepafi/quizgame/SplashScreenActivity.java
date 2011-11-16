@@ -18,7 +18,7 @@ public class SplashScreenActivity extends Activity {
 
 		//Bind animation to the 1st question mark
 		final ImageView image1 = (ImageView) findViewById(R.id.imageView1); 
-		
+
 		Animation anim1 = AnimationUtils.loadAnimation(this, R.anim.questionmarkanimation); 
 
 		anim1.setAnimationListener(new AnimationListener() {
@@ -30,12 +30,12 @@ public class SplashScreenActivity extends Activity {
 			}
 
 			public void onAnimationRepeat(Animation animation) {
-				
+
 
 			}
 
 			public void onAnimationStart(Animation animation) {
-				
+
 
 			}
 
@@ -48,7 +48,7 @@ public class SplashScreenActivity extends Activity {
 		final ImageView image2 = (ImageView) findViewById(R.id.imageView2); 
 		Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.questionmarkanimation); 
 		image2.setAnimation(anim2);
-		
+
 		final TextView textview1 = (TextView) findViewById(R.id.textView1);
 		Animation anim3 = AnimationUtils.loadAnimation(this, R.anim.anim_credits);
 		textview1.setAnimation(anim3);

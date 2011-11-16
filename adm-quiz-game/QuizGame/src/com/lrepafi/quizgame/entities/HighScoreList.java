@@ -15,5 +15,5 @@ public class HighScoreList {
 	public void setScores(List<HighScore> scores) {
 		this.scores = scores;
 	}
-	
+
 }

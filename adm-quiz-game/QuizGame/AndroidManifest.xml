@@ -17,8 +17,9 @@
 
 		<activity android:name=".QuestionActivity" android:label="@string/app_name">
 		</activity>
-		
-		<activity android:name=".InternetQuestionActivity" android:label="@string/app_name">
+
+		<activity android:name=".InternetQuestionActivity"
+			android:label="@string/app_name">
 		</activity>
 
 		<activity android:name=".ScoresActivity" android:label="@string/app_name">

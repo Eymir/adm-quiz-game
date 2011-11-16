@@ -30,8 +30,8 @@ public class QuestionActivity extends Activity {
 
 
 	private SharedPreferences preferences = null;
-		
-	
+
+
 	QuestionController qController = new QuestionController(this);
 
 	Button[] answerBtn = new Button[4];
@@ -50,16 +50,16 @@ public class QuestionActivity extends Activity {
 		Editor editor = preferences.edit();
 		editor.putInt(Globals.PREFERENCES_QUESTION_SCORE, qController.getScore());
 		editor.putInt(Globals.PREFERENCES_TIME, time);
-		
+
 		if (qController.getQuestionNumber() > 0) editor.putInt(Globals.PREFERENCES_QUESTION_NO, qController.getQuestionNumber()-1);
 		else editor.putInt(Globals.PREFERENCES_QUESTION_NO, 0);
-		
-		
+
+
 		editor.commit();
-		
+
 		super.onPause();
 	}
-		
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,13 +68,13 @@ public class QuestionActivity extends Activity {
 		setContentView(R.layout.question);
 
 		preferences = 
-		      getSharedPreferences(Globals.PREFERENCES, Context.MODE_PRIVATE);
+			getSharedPreferences(Globals.PREFERENCES, Context.MODE_PRIVATE);
 
 		time = preferences.getInt(Globals.PREFERENCES_TIME, 10*TOTAL_TIME);
 		qController.setQ(preferences.getInt(Globals.PREFERENCES_QUESTION_NO, 0));
 		qController.setScore(preferences.getInt(Globals.PREFERENCES_QUESTION_SCORE, 0));
 		qController.init(preferences);
-		
+
 		//Binding button/variables
 		questionText = (TextView) findViewById(R.id.textViewQuestion);
 		questionTextN = (TextView) findViewById(R.id.textViewQuestionN);
@@ -138,7 +138,7 @@ public class QuestionActivity extends Activity {
 
 	@Override 
 	public boolean onCreateOptionsMenu(Menu menu) { 
- 
+
 		MenuInflater inflater = getMenuInflater(); 
 		inflater.inflate(R.menu.question, menu); 
 		return true; 
@@ -148,7 +148,7 @@ public class QuestionActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	
+
 		int n = qController.getHelp();
 		answerBtn[n].setTextColor(Color.GRAY);
 
@@ -163,12 +163,12 @@ public class QuestionActivity extends Activity {
 
 		if (q == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			
+
 			String outMsg;
 			if (qController.getQuestionNumber()==0) outMsg = "I'm sorry, I don't have questions for you!Maybe you haven't setted your preferences";
 			else outMsg = "We finished this game, your score is "+qController.getScore()+"!";
-			
-			
+
+
 			builder.setMessage(outMsg)
 			.setCancelable(false)
 			.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
@@ -317,34 +317,34 @@ public class QuestionActivity extends Activity {
 			return;
 		}
 	}
-	
+
 	public FileInputStream getFileInputStream() {
 
-	FileInputStream fin=null;
-	try {
-		fin = openFileInput("scores.xml");
-	} catch (FileNotFoundException e) {
+		FileInputStream fin=null;
+		try {
+			fin = openFileInput("scores.xml");
+		} catch (FileNotFoundException e) {
 
-		e.printStackTrace();
+			e.printStackTrace();
+		}
+
+		return fin;
+
 	}
 
-	return fin;
-	
-	}
-	
 	public FileOutputStream getFileOutputStream() {
 		FileOutputStream fos=null;
 		try {
 			fos = openFileOutput("scores.xml",  
-			        Context.MODE_PRIVATE);
+					Context.MODE_PRIVATE);
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
 		} 
-		
+
 		return fos;
 	}
-	
+
 }
 
 

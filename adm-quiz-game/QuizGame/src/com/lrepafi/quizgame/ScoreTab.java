@@ -21,14 +21,14 @@ public class ScoreTab extends Activity {
 
 		setContentView(R.layout.tablescore);
 
-		sCtrl = getScoreController();
+		sCtrl = new ScoreController();
 		loadData(sCtrl);
-		
+
 
 	}
-	
+
 	protected void loadData(ScoreController s) {
-		
+
 	}
 
 	protected void drawTable() {
@@ -63,11 +63,6 @@ public class ScoreTab extends Activity {
 		}
 
 
-	}
-
-	protected ScoreController getScoreController() {
-		//return new ScoreController(false);
-		return new ScoreController();
 	}
 
 	protected void addScore(Context c, TableLayout table, LocalScore s, int ranking) {

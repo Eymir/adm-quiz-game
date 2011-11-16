@@ -5,10 +5,10 @@ public class HighScore implements Comparable<HighScore>{
 	String email;
 	String username;
 	int score;
-	
+
 	public HighScore() {
 	}
-	
+
 	public HighScore (String email, String username, int score) {
 		this.email = email;
 		this.username = username;
@@ -40,7 +40,7 @@ public class HighScore implements Comparable<HighScore>{
 	}
 
 	public int compareTo(HighScore o) {
-		
+
 		if (this.getScore() > o.getScore()) {
 			return 1;
 		}

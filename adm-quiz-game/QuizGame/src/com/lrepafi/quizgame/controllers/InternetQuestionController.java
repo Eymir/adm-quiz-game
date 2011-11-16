@@ -11,18 +11,18 @@ import android.util.Log;
 public class InternetQuestionController {
 
 
-	
+
 	private Settings settings = new Settings();
-	
+
 	public Settings getSettings() {
 		return settings;
 	}
-	
+
 	private InternetQuestionActivity caller;
 	public InternetQuestionController(InternetQuestionActivity caller) {
 		this.caller=caller;
 	}
-	
+
 	public void setScore(int score) {
 		this.score = score;
 	}
@@ -36,52 +36,52 @@ public class InternetQuestionController {
 	int score=0;
 
 	private void loadSettings(SharedPreferences prefs) {
-		
-		
+
+
 		settings.setUsername(prefs.getString(Globals.PREFERENCES_USER_NAME, ""));
 		settings.setEmail(prefs.getString(Globals.PREFERENCES_EMAIL, ""));
 		settings.setServerName(prefs.getString(Globals.PREFERENCES_SERVER_NAME, ""));
-		
+
 		for(int i=0;i<settings.getPreferences().size();i++) {
-			
+
 			settings.getPreferences().get(i).setValue(prefs.getBoolean
 					(Globals.PREFERENCES_CATEGORY_PREFIX+settings.getPreferences().get(i).getPref(),
 							false));
 
 		}		
-		
+
 	}
-	
+
 	public void init(SharedPreferences prefs) {
 		loadSettings(prefs);
 	}
-	
+
 	private void saveScore() {
-		
+
 		if (this.score == 0) return;
-		
+
 		XMLScoreFactory s = new XMLScoreFactory();
 		ArrayList<LocalScore>scores = s.load(caller.getFileInputStream());
 		int index=0;
 		for(int i=0;i<scores.size();i++) {
 			if (scores.get(i).getScore()>=this.score) index=i;
 		}
-		
+
 		if (index > Globals.MAX_SCORES) return;
-		
+
 		LocalScore current = new LocalScore(this.settings.getUsername(), this.score);
 		scores.add(++index, current);
-		
+
 		try {
 			scores.remove(Globals.MAX_SCORES);
 		} catch (Exception e) {
 			//It doesn't matter
 		}
-		
+
 		s.save(caller.getFileOutputStream(), scores);
-		
+
 	}
-			
+
 	public void addQuestion(Question q) {
 		list.add(q);
 	}
@@ -90,9 +90,9 @@ public class InternetQuestionController {
 	public void setTotQuestions(int tot) {
 		this.tot = tot;
 	}
-	
+
 	public boolean getNextQuestion() {
-		
+
 		if (q< tot) {
 			q++;
 			return true;
